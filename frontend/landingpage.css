@@ -1,0 +1,62 @@
+body {
+    height: 100vh;
+    margin: 0;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.header{
+    padding-left: 100px;
+    height: 300px;
+}
+
+.fairify-text {
+    font-size: 180px;
+    font-weight: 800;
+    font-family: "DM Sans", sans-serif;
+    letter-spacing: 27px;
+    color: rgb(0, 0, 0); /* Text starts as black */
+    padding: 0;
+}
+
+.fairify-text span {
+    background: linear-gradient(90deg, #973AA8, #8187DC, #9FA0FF, #e54cff);
+    background-size: 200%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: gradient-letter 2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.2s); /* Stagger effect */
+}
+
+.fairify-text span:nth-child(1) { --i: 0; }
+.fairify-text span:nth-child(2) { --i: 1; }
+.fairify-text span:nth-child(3) { --i: 2; }
+.fairify-text span:nth-child(4) { --i: 3; }
+.fairify-text span:nth-child(5) { --i: 4; }
+.fairify-text span:nth-child(6) { --i: 5; }
+.fairify-text span:nth-child(7) { --i: 6; }
+
+@keyframes gradient-letter {
+    0% {
+        color: black; /* Start black */
+        background-position: 0% 100%;
+    }
+    50% {
+        color: transparent; /* Reveal gradient */
+        background-position: 100% 100%;
+    }
+    100% {
+        color: black; /* Return to black */
+        background-position: 0% 100%;
+    }
+}
+
+.oneliner{
+    font-family: DM Sans, sans-serif;
+    font-size: 50px;
+    letter-spacing: 3px;
+    font-weight: 500;
+    position: relative;
+    top: -95px;
+}
