@@ -1,14 +1,17 @@
-Installed countergen library. shall need it in Heroku or something
+
 
 virtual env
-python3.10 -m venv myenv
+python3.10 -m venv newenv
 installed langfair here
+installed django djangorestframework django-cors-headers
+installed countergen
 
-source myenv/bin/activate 
-
-
-
-
+¸
 
 
+source /Users/vruddhi/Desktop/ipd/fairify_backend/newenv/bin/activate
 
+
+
+
+python3 manage.py runserver
