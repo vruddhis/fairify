@@ -1,0 +1,14 @@
+Installed countergen library. shall need it in Heroku or something
+
+virtual env
+python3.10 -m venv myenv
+installed langfair here
+
+source myenv/bin/activate 
+
+
+
+
+
+
+
