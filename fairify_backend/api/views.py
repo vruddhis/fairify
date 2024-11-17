@@ -3,13 +3,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from django.conf import settings
-from .utils.convert import convert_to_jsonl
+from .utils.convert import convert_to_augmented_csv
 
 class FileConversionAPIView(APIView):
     parser_classes = [MultiPartParser]
 
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
+        swap_gender = request.data.get('swap_gender', 'false').lower() == 'true'
 
         if not file:
             return Response({"error": "No file was uploaded."}, status=400)
@@ -19,11 +20,11 @@ class FileConversionAPIView(APIView):
                 f.write(chunk)
 
         try:
-            converted_data = convert_to_jsonl(temp_path)
 
+            augmented_data = convert_to_augmented_csv(temp_path, swap_gender=swap_gender)
             os.remove(temp_path)
 
-            return Response({"converted_data": converted_data}, status=200)
+            return Response({"augmented_data": augmented_data}, status=200)
         except Exception as e:
             if os.path.exists(temp_path):
                 os.remove(temp_path)

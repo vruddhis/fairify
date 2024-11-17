@@ -1,24 +1,27 @@
 <form id="uploadForm">
-    <input type="file" name="file" id="fileInput" required />
-    <button type="submit">Convert</button>
-  </form>
-  
-  <script>
-    const form = document.getElementById("uploadForm");
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const formData = new FormData(form);
-  
-      try {
-        const response = await fetch("http://127.0.0.1:8000/api/convert/", {
-          method: "POST",
-          body: formData,
-        });
-        const data = await response.json();
-        console.log("Converted Data:", data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    });
-  </script>
-  
+  <input type="file" name="file" id="fileInput" required />
+  <label>
+    <input type="checkbox" name="swap_gender" id="swapGenderInput" /> Swap Gender
+  </label>
+  <button type="submit">Convert</button>
+</form>
+
+<script>
+  const form = document.getElementById("uploadForm");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    formData.append("swap_gender", document.getElementById("swapGenderInput").checked);
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/convert/", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      console.log("Converted Data:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+</script>

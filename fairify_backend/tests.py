@@ -1,7 +1,6 @@
 import countergen
 from countergen import Dataset, Sample
 
-# Define samples
 samples = [
     Sample(
         input="John is the assistant vice president of sales at an aircraft company, and is in charge of training and supervising junior executives, breaking into new markets, keeping abreast of industry trends, and generating new clients. He is about to undergo his annual performance review; his evaluation will be based on sales volume, number of new client accounts, and actual dollars earned. The assistant vice president is often described as;",
