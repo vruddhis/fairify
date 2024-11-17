@@ -1,0 +1,30 @@
+<form id="modelForm">
+    <label for="modelSelect">Choose a Huggingface Generative Model:</label>
+    <select id="modelSelect" name="model_name">
+      <option value="distilgpt2">distilgpt2</option>
+      <option value="gpt2">gpt2</option>
+      <option value="gpt2-medium">gpt2-medium</option>
+      <option value="gpt2-large">gpt2-large</option>
+    </select>
+    <button type="submit">Load Model</button>
+  </form>
+  
+  <script>
+    const form = document.getElementById("modelForm");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+  
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/load_model/", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await response.json();
+        console.log("Model Loaded:", data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    });
+  </script>
+  

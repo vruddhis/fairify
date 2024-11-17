@@ -4,6 +4,11 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from django.conf import settings
 from .utils.convert import convert_to_augmented_csv
+import torch
+from transformers import GPT2LMHeadModel
+from countergenedit import get_generative_model_evaluator, pt_to_generative_model
+from countergenedit.tools.utils import get_device
+from countergen import aggregators
 
 class FileConversionAPIView(APIView):
     parser_classes = [MultiPartParser]
@@ -29,3 +34,31 @@ class FileConversionAPIView(APIView):
             if os.path.exists(temp_path):
                 os.remove(temp_path)
             return Response({"error": str(e)}, status=500)
+
+
+from .models import ModelRegistry
+
+class LoadModelAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        model_name = request.data.get("model_name")
+        if not model_name:
+            return Response({"error": "Model name is required."}, status=400)
+
+        try:
+            device = get_device()
+            model = GPT2LMHeadModel.from_pretrained(model_name).to(device)
+            model_evaluator = get_generative_model_evaluator(
+                pt_to_generative_model(model), "probability"
+            )
+
+            aggregator = aggregators.PerformanceStatsPerCategory()
+
+            ModelRegistry.set_model(model, model_evaluator, aggregator)
+
+            return Response({
+                "message": f"Model '{model_name}' loaded and stored successfully.",
+                "aggregator": "PerformanceStatsPerCategory ready"
+            }, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+
