@@ -186,6 +186,14 @@
     align-items: center;
 }
 
+.insidebutton{
+    border-radius: 42px;
+}
+
+.options :hover{
+    background-color: #623e83;
+}
+
 @media screen and (max-width: 1300px) {
     .datasetOptions{
         width: 50%;
