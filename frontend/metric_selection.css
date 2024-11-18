@@ -13,7 +13,7 @@
     left: 0;
     width: 0%; /* This will animate */
     height: 4px;
-    background: linear-gradient(90deg, #973AA8, #8187DC, #9FA0FF, #e54cff);
+    background: linear-gradient(90deg, rgb(151, 58, 168, 0.5), rgb(129, 135, 220, 0.5), rgb(159, 160, 255, 0.5), rgb(229, 76, 255, 0.5));
     transition: width 0.4s ease;
     z-index: 1;
 }
@@ -27,9 +27,9 @@
 }
 
 .step {
-    width: 50px;
-    height: 50px;
-    background-color: #8c8383;
+    width: 80px;
+    height: 80px;
+    background-color: #cdaaee;
     border: 4px solid transparent;
     border-radius: 50%;
     display: flex;
@@ -39,12 +39,18 @@
     transition: background-color 0.3s, border-color 0.3s ease;
 }
 
+.step img{
+    width: 50px;
+    height: 50px;
+    align-items: center;
+}
+
 .step.active {
-    background-color: #973AA8;
+    background-color: rgb(151, 58, 168, 0.8);
     border-color: #9FA0FF;
 }
 
-button {
+.extra {
     padding: 10px 20px;
     font-size: 16px;
     margin: 5px;
@@ -56,7 +62,7 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.extra:hover {
     background-color: #9FA0FF;
 }
 
@@ -67,14 +73,85 @@ button:hover {
     font-weight: 700;
     line-height: normal;
     letter-spacing: 6.05px;
+    padding: 0;
+    margin: 0;
 }
 
 .subtext{
     position: relative;
-    top: -35px;
     text-align: center;
+    padding: 0;
+    margin: 0;
     color: #7F7F7F;
     font-family: "DM Sans";
     font-size: 30px;
     font-weight: 500;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.selection{
+    border-radius: 34px;
+    border: 1px solid #DDBDFC;
+    background: linear-gradient(180deg, rgba(218, 182, 252, 0.37) 0%, rgba(142, 148, 242, 0.37) 100%);
+    box-shadow: 8px 7px 8.2px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(50px);
+    width: 35vw;
+    height: 23vw;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.pageHead{
+    font-family: "DM Sans";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 1.75px;
+}
+
+.allButtons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2vw;
+}
+
+.mainButtons{
+    width: 25vw;
+    height: 4vw;
+    font-family: "DM Sans";
+    border-radius: 20px;
+    background-color: transparent;
+    border: 2px solid #7F7F7F;
+    
+}
+
+h3{
+    font-family: "DM Sans";
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 0;
+    margin: 0;
+}
+
+.buttonSubtext{
+    font-family: "DM Sans";
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
+    line-height: normal;
 }
