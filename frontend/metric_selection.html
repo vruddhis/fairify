@@ -13,6 +13,7 @@
 <body>
     <div class="container">
 
+        
         <div class="header">
             <h2 class="heading">FAIRIFY</h2>
             <p class="subtext">Helping you Debias your Models</p>
@@ -31,15 +32,12 @@
                     <img src="./assets/model.png" alt="model">
                 </div>
             </div>
-
-            <button class="extra" onclick="nextStep()">Next Page</button>
-            <button class = "extra" onclick="prevStep()">Previous Page</button>
         </div>
         
         <div class="selection">
             <h2 class="pageHead">SELECT THE METRIC</h2>
             <div class="allButtons">
-                <button class="mainButtons">
+                <button class="mainButtons" onclick="window.location.href='datasetCST1.html'">
                     <h3>Counterfactual sentence testing</h3>
                     <p class="buttonSubtext">for generative language models</p>
                 </button>
@@ -57,6 +55,5 @@
         <div class="end"></div>
     </div>
 
-    <script src="./metric_selection.js"></script>
 </body>
 </html>

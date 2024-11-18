@@ -11,7 +11,7 @@
     position: absolute;
     top: 50%;
     left: 0;
-    width: 0%; /* This will animate */
+    width: 50%; /* This will animate */
     height: 4px;
     background: linear-gradient(90deg, rgb(151, 58, 168, 0.5), rgb(129, 135, 220, 0.5), rgb(159, 160, 255, 0.5), rgb(229, 76, 255, 0.5));
     transition: width 0.4s ease;
@@ -50,22 +50,6 @@
     border-color: #9FA0FF;
 }
 
-.extra {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 5px;
-    cursor: pointer;
-    border: none;
-    background-color: #8187DC;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-
-.extra:hover {
-    background-color: #9FA0FF;
-}
 
 .heading{
     text-align: center;
@@ -98,17 +82,22 @@
     gap: 40px;
 }
 
-.selection{
-    border-radius: 34px;
-    border: 1px solid #DDBDFC;
-    background: linear-gradient(180deg, rgba(218, 182, 252, 0.37) 0%, rgba(142, 148, 242, 0.37) 100%);
-    box-shadow: 8px 7px 8.2px 0px rgba(0, 0, 0, 0.25);
-    backdrop-filter: blur(50px);
-    width: 35vw;
-    height: 23vw;
-    display: flex;
-    flex-direction: column;
+.info{
+    width: 70%;
+    height: auto;
+    border-radius: 18px;
+    border: 1px solid #7F7F7F;
+}
+
+.info p{
+    color: rgba(0, 0, 0, 0.80);
     text-align: center;
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 10px 30px 10px 30px;
 }
 
 .pageHead{
@@ -120,55 +109,102 @@
     letter-spacing: 1.75px;
 }
 
-.allButtons{
+.datasetOptions{
+    border-radius: 34px;
+    border: 1px solid #DDBDFC;
+    background: linear-gradient(180deg, rgba(218, 182, 252, 0.37) 0%, rgba(142, 148, 242, 0.37) 100%);
+    box-shadow: 8px 7px 8.2px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(50px);
+    width: 45vw;
+    height: auto;
+    padding-bottom: 30px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2vw;
+    text-align: center;
 }
 
-.mainButtons{
-    width: 25vw;
-    height: 4vw;
+.b1, .b2{
+    width: auto;
+    height: auto;
     font-family: "DM Sans";
-    border-radius: 20px;
-    background-color: transparent;
-    border: 2px solid #7F7F7F;
-    
-}
-
-h3{
-    font-family: "DM Sans";
-    font-size: 19px;
+    border-radius: 42px;
+    border: 1px solid rgba(172, 70, 161, 0.50);
+    background: rgba(130, 47, 175, 0.70);
+    color: #000;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    padding: 0;
-    margin: 0;
+    padding: 7px;
 }
 
-.buttonSubtext{
+.insidebutton{
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.options{
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.dropdown{
+    width: 227px;
+    height: 45px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 1px solid rgba(172, 70, 161, 0.50);
+    background: rgba(130, 47, 175, 0.70);
+    color: #000;
     font-family: "DM Sans";
-    font-size: 17px;
+    font-size: 16px;
+}
+
+.textdd{
+    color: #000;
+    font-family: "DM Sans";
+    font-size: 16px;
     font-style: normal;
-    font-weight: 400;
-    padding: 0;
-    margin: 0;
+    font-weight: 500;
     line-height: normal;
+    letter-spacing: 1px;
+    background: rgba(130, 47, 175, 0.50);
+}
+
+.axes{
+    display: flex;
+    gap: 60px;
+    padding-top: 30px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
 @media screen and (max-width: 1300px) {
-    .selection {
-        width: 50vw;
-        height: auto;
+    .datasetOptions{
+        width: 50%;
         padding: 20px;
     }
 
-    .mainButtons {
-        padding: 10px;
-        width: 60%;
-        height: auto;
+    .options, .axes{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .options{
+        padding-top: 30px;
+    }
+
+    .pageHead{
+        padding: 0;
+        margin: 0;
     }
 }
 
@@ -178,37 +214,30 @@ h3{
         width: 90%;
     }
 
-    .selection {
-        width: 70vw;
-        height: auto;
-        padding: 20px;
-    }
-
-    .mainButtons {
-        padding: 10px;
-        width: 80%;
-        height: auto;
-    }
-
     .pageHead {
         font-size: 22px;
     }
 
-    h3 {
-        font-size: 18px;
+    .info p{
+        font-size: 15px;
     }
 
-    .buttonSubtext {
-        font-size: 15px;
+    .subtext{
+        font-size: 25px;
+    }
+
+    .step {
+        width: 60px;
+        height: 60px;
+    }
+
+    .step img {
+        width: 40px;
+        height: 40px;
     }
 }
 
-/* Media Queries for Mobile (480px and below) */
 @media screen and (max-width: 480px) {
-    .container {
-        gap: 20px;
-    }
-
     .subtext{
         font-size: 20px;
     }
@@ -228,28 +257,15 @@ h3{
         height: 40px;
     }
 
-    .selection {
-        width: 90%;
-        height: auto;
-        padding: 10px;
-    }
-
-    .mainButtons {
-        width: 90%;
-        height: auto;
-        padding: 10px;
-        font-size: 14px;
-    }
-
-    h3 {
-        font-size: 16px;
-    }
-
-    .buttonSubtext {
-        font-size: 14px;
-    }
-
     .pageHead {
         font-size: 20px;
+    }
+
+    .info p{
+        font-size: 15px;
+    }
+
+    .subtext{
+        font-size: 25px;
     }
 }
