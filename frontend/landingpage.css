@@ -78,8 +78,6 @@ body {
     max-width: 500px;
 }
 
-/* General Styles */
-
 .step-container {
     display: flex;
     align-items: center;
@@ -91,8 +89,7 @@ body {
 
 }
 
-/* Individual Step */
-.step {
+.step{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -100,8 +97,7 @@ body {
     margin: 10px;
 }
 
-
-.circle2 {
+.circle2{
     width: 80px;
     height: 80px;
     background-color: rgba(71, 18, 107, 0.6);
@@ -116,7 +112,7 @@ body {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.step p {
+.step p{
     margin-top: 10px;
     font-size: 24px;
     font-family: "DM Sans";
@@ -128,13 +124,12 @@ body {
     flex-direction: column;
 }
 
-.end {
+.end{
     display: flex;
     justify-content: center;
     margin-top: 20px;
     padding-bottom: 5%;
 }
-
 
 .button{
     border-radius: 300px;
@@ -144,7 +139,7 @@ body {
     height: 70px;
 }
 
-.button p{
+a{
     color: #FFF;
     font-family: "DM Sans";
     font-size: 40px;
@@ -153,11 +148,8 @@ body {
     letter-spacing: 2.5px;
     width: 350px;
     text-align: center;
-    position: relative;
-    top: -30px;
-    left: -12px;
+    text-decoration: none;
 }
-
 
 .background {
     position: absolute;
@@ -202,4 +194,140 @@ body {
     bottom: 10%;
     right: 25%;
   }
+
+  .button:hover{
+    background-color: rgba(151, 125, 203, 0.8);
+  }
   
+  @media (max-width: 1000px) {
+
+    .fairify-text {
+        font-size: 12vw;
+        letter-spacing: 2vw;
+    }
+
+    .hero{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .oneliner {
+        font-size: 4vw;
+        padding-top: 50px;
+    }
+
+    .brain{
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .brain img{
+        width: 50%;
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 0;
+        padding-top: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .step-container {
+        flex-direction: column;
+        align-items: center;
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+    }
+
+    .header{
+        padding-left: 0;
+    }
+
+    .button{
+        width: 90%;
+        max-width: 250px;
+        height: 45px;
+        font-size: 20px;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    a{
+        color: #FFF;
+        font-family: "DM Sans";
+        font-size: 20px;
+        font-weight: 600;
+        line-height: normal;
+        letter-spacing: 2.5px;
+        text-decoration: none;
+    }
+
+    .end{
+        margin: 0;
+        padding-left: 0;
+        padding-top: 0;
+        padding-right: 0;
+        padding-bottom: 40px;
+    }
+
+    .circle2{
+        width: 65px;
+        height: 65px;
+        font-size: 18px;
+    }
+
+    .step p {
+        font-size: 22px;
+    }
+  }
+  
+@media (max-width: 600px) {
+    .fairify-text {
+        font-size: 15vw;
+        letter-spacing: 1.5vw;
+    }
+
+    .hero{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .oneliner {
+        font-size: 5vw;
+        padding-top: 30%;
+    }
+
+    .brain img {
+        width: 50%;
+    }
+
+    .step-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .circle2{
+        width: 50px;
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .step p {
+        font-size: 15px;
+    }
+
+    .button {
+        height: 40px;
+        font-size: 14px;
+        width: 50%;
+    }
+
+    .end{
+        padding-bottom: 40px;
+    }
+
+}
+
