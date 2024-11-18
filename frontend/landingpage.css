@@ -1,22 +1,28 @@
 body {
-    height: 100vh;
     margin: 0;
-    background-color: #ffffff;
-    overflow: hidden;
+    padding: 0;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.21);
+    z-index: 1;
 }
 
 .header{
-    padding-left: 100px;
-    height: 300px;
+    padding-left: 10%;
+    padding-top: 0;
 }
 
 .fairify-text {
-    font-size: 180px;
+    font-size: 12vw;
     font-weight: 800;
     font-family: "DM Sans", sans-serif;
     letter-spacing: 27px;
     color: rgb(0, 0, 0); /* Text starts as black */
     padding: 0;
+    margin-top: 50px;
 }
 
 .fairify-text span {
@@ -54,9 +60,146 @@ body {
 
 .oneliner{
     font-family: DM Sans, sans-serif;
-    font-size: 50px;
+    font-size: 3vw;
     letter-spacing: 3px;
     font-weight: 500;
-    position: relative;
-    top: -95px;
+    margin-top: -110px;
+    line-height: 1.2;
 }
+
+.hero{
+    display: flex;
+}
+
+.brain img{
+    padding-left: 10%;
+    padding-top: 5%;
+    width: 75vw; 
+    max-width: 500px;
+}
+
+/* General Styles */
+
+.step-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    margin: 0px auto;
+    margin-left: 110px;
+    width: 80%;
+
+}
+
+/* Individual Step */
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+}
+
+
+.circle2 {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(71, 18, 107, 0.6);
+    color: white;
+    font-size: 30px;
+    font-family: "DM Sans";
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.step p {
+    margin-top: 10px;
+    font-size: 24px;
+    font-family: "DM Sans";
+    line-height: 1.2;
+}
+
+.home{
+    display: flex;
+    flex-direction: column;
+}
+
+.end {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding-bottom: 5%;
+}
+
+
+.button{
+    border-radius: 300px;
+    border: 1px solid #FFF;
+    background: rgba(71, 18, 107, 0.60);
+    width: 320px;
+    height: 70px;
+}
+
+.button p{
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 40px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 2.5px;
+    width: 350px;
+    text-align: center;
+    position: relative;
+    top: -30px;
+    left: -12px;
+}
+
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1; /* Ensure it stays behind everything */
+  }
+  
+  .circle {
+    position: absolute;
+    width: 300px; /* Adjust size */
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+    filter: blur(100px); /* Blurring effect */
+    opacity: 0.8;
+  }
+  
+  .pink {
+    background: radial-gradient(circle, rgba(167, 41, 104, 0.6), rgba(255, 0, 128, 0));
+    top: 10%;
+    left: 20%;
+  }
+  
+  .purple {
+    background: radial-gradient(circle, rgba(128, 0, 255, 0.6), rgba(128, 0, 255, 0));
+    top: 30%;
+    right: 10%;
+  }
+  
+  .blue {
+    background: radial-gradient(circle, rgba(177, 67, 220, 0.6), rgba(0, 128, 255, 0));
+    bottom: 20%;
+    left: 15%;
+  }
+  
+  .orange {
+    background: radial-gradient(circle, rgba(183, 86, 172, 0.6), rgba(255, 165, 0, 0));
+    bottom: 10%;
+    right: 25%;
+  }
+  
