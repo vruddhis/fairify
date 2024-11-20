@@ -11,35 +11,30 @@
 </head>
 
 <script>
-    const form = document.getElementById("uploadForm");
-  
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-  
-      const formData = new FormData(form);
-      formData.append("swap_gender", document.getElementById("swapGenderInput").checked);
-  
-      try {
-        const response = await fetch("http://127.0.0.1:8000/api/convert/", {
-          method: "POST",
-          body: formData,
-        });
-  
-        if (response.ok) {
-          const data = await response.json();
-          // Store the data in localStorage for access on the new page
-          localStorage.setItem("conversionResults", JSON.stringify(data));
-          // Redirect to the results page
-          window.location.href = "results.html";
-        } else {
-          alert("Something went wrong! Please try again.");
+    function handleFileUpload(event) {
+        const file = event.target.files[0]; // Access the selected file
+        if (file) {
+            console.log("Selected file:", file.name); // Log the file name
         }
-      } catch (error) {
-        console.error("Error:", error);
-      }
+    }
+
+    const button = document.getElementById("b2");
+    button.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/convert/", {
+                method: "POST",
+                body: formData,
+            });
+            const data = await response.json();
+            console.log("Converted Data:", data);
+        } 
+        catch (error) {
+            console.error("Error:", error);
+        }  
     });
-  </script>
-  
+</script>
 
 <body>
     <div class="container">
@@ -78,7 +73,7 @@
             <h3 class="pageHead">SELECT A DATASET OPTION</h3>
 
             <div class="options">
-                <button class="b2" onclick="document.getElementById('fileInput').click()">
+                <button class="b2" onclick="document.getElementById('fileInput').click()" type="submit">
                     <div class="insidebutton">
                         UPLOAD YOUR OWN DATASET
                         <img src="./assets/button2.png" alt="b2" style="border-radius: 50%;">
