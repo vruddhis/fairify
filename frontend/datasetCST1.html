@@ -11,29 +11,53 @@
 </head>
 
 <script>
-    function handleFileUpload(event) {
-        const file = event.target.files[0]; // Access the selected file
-        if (file) {
-            console.log("Selected file:", file.name); // Log the file name
-        }
+    function handleFileUpload(){
+        fake_path = document.getElementById('fileInput').value
+        var name = (fake_path.split("\\").pop())
+        document.getElementById("fileName").innerHTML = "Selected File: " + name;
+    }
+    
+    function handleAxesSelection() {
+    const selectedAxis = document.getElementById("biasAxes").value;
+    if (selectedAxis !== "gender") {
+      alert("Currently, only 'Gender' is supported for bias axes.");
+      document.getElementById("biasAxes").value = "gender"; // Reset to Gender
+    }
+  }
+
+  async function convertDataset() {
+    const fileInput = document.getElementById("fileInput");
+    const selectedAxis = document.getElementById("biasAxes").value;
+
+    if (!fileInput.files.length) {
+      alert("Please upload a file first!");
+      return;
     }
 
-    const button = document.getElementById("b2");
-    button.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        const formData = new FormData(form);
-        try {
-            const response = await fetch("http://127.0.0.1:8000/api/convert/", {
-                method: "POST",
-                body: formData,
-            });
-            const data = await response.json();
-            console.log("Converted Data:", data);
-        } 
-        catch (error) {
-            console.error("Error:", error);
-        }  
-    });
+    if (selectedAxis !== "gender") {
+      alert("Currently, only 'Gender' is supported for bias axes.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", fileInput.files[0]);
+    formData.append("swap_gender", true); // Automatically set swap_gender to true for Gender axis
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/convert/", {
+            method: "POST",
+            body: formData,
+        });
+        const data = await response.json();
+        console.log("Converted Data:", data);
+        alert("Dataset converted successfully! Check console for details.");
+    } 
+
+    catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while converting the dataset.");
+    }
+  }
 </script>
 
 <body>
@@ -72,14 +96,18 @@
 
             <h3 class="pageHead">SELECT A DATASET OPTION</h3>
 
-            <div class="options">
-                <button class="b2" onclick="document.getElementById('fileInput').click()" type="submit">
-                    <div class="insidebutton">
-                        UPLOAD YOUR OWN DATASET
-                        <img src="./assets/button2.png" alt="b2" style="border-radius: 50%;">
-                    </div>
-                </button>
-                <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+            <div class="options"> 
+                <div class="button1File">
+                    <button class="b2" onclick="document.getElementById('fileInput').click()">
+                        <div class="insidebutton">
+                            UPLOAD YOUR OWN DATASET
+                            <img src="./assets/button2.png" alt="b2" style="border-radius: 50%;">
+                        </div>
+                    </button>
+                    <div id="fileName"></div>
+                    <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+                </div>
+                
                 <button class="b1">
                     <div class="insidebutton">
                         CREATE A CUSTOM DATASET
@@ -90,7 +118,7 @@
 
             <div class="axes">
                 <h3 class="pageHead">SELECT BIAS AXES</h3>
-                <select class="dropdown">
+                <select class="dropdown" id="biasAxes" onchange="handleAxesSelection()">
                     <option class="textdd" value="gender">Gender</option>
                     <option disabled class="textdd" value="caste">Caste</option>
                     <option disabled class="textdd" value="religion">Religion</option>
@@ -98,7 +126,10 @@
                 </select>
             </div>
 
-       </div>
+        </div>
+        <div class="convertButton">
+            <button class="finalSubmit" onclick="convertDataset()">SUBMIT</button>
+        </div>
     </div>
     <div style="height: 50px;"></div>
 </body>

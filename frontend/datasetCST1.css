@@ -143,6 +143,11 @@
     justify-content: center;
     text-align: center;
     align-items: center;
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
 
 .options{
@@ -151,6 +156,12 @@
     justify-content: center;
     text-align: center;
     align-items: center;
+}
+
+.button1File{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 .dropdown{
@@ -189,8 +200,37 @@
     border-radius: 42px;
 }
 
-.options :hover{
+.button1File :hover{
     background-color: #623e83;
+}
+
+#fileName{
+    font-family: "DM Sans";
+    font-size: 16px;
+}
+
+#fileName:hover{
+    background: none;
+}
+
+.finalSubmit{
+    width: 100px;
+    height: 50px;
+    font-family: "DM Sans";
+    border-radius: 42px;
+    border: 1px solid rgba(172, 70, 161, 0.50);
+    background: rgba(130, 47, 175, 0.70);
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 15px;
+}
+
+.finalSubmit:hover{
+    background-color: #623e83;
+
 }
 
 @media screen and (max-width: 1300px) {
