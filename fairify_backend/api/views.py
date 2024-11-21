@@ -6,7 +6,7 @@ from django.conf import settings
 from .utils.convert import convert_to_augmented_csv
 import torch
 from transformers import GPT2LMHeadModel
-from countergenedit import get_generative_model_evaluator, pt_to_generative_model , #api_to_generative_model
+from countergenedit import get_generative_model_evaluator, pt_to_generative_model  #,api_to_generative_model
 from countergenedit.tools.utils import get_device
 from countergen import aggregators
 from countergen.tools.api_utils import ApiConfig
@@ -87,4 +87,4 @@ class LoadModelAPIView(APIView):
                 "aggregator": "PerformanceStatsPerCategory ready"
             }, status=200)
         except Exception as e:
-            return Response({"error": str(e)}, status=500)""""""
+            return Response({"error": str(e)}, status=500)"""
