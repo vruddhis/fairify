@@ -3,97 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CST Dataset</title>
+    <title>FAIRIFY Dataset</title>
     <link rel="stylesheet" href="./datasetCST1.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 </head>
 
-<script>
-    function handleFileUpload(){
-        fake_path = document.getElementById('fileInput').value
-        var name = (fake_path.split("\\").pop())
-        document.getElementById("fileName").innerHTML = "Selected File: " + name;
-    }
-    
-    function handleAxesSelection() {
-    const selectedAxis = document.getElementById("biasAxes").value;
-    if (selectedAxis !== "gender") {
-      alert("Currently, only 'Gender' is supported for bias axes.");
-      document.getElementById("biasAxes").value = "gender"; // Reset to Gender
-    }
-  }
-
-  async function convertDataset() {
-    const fileInput = document.getElementById("fileInput");
-    const selectedAxis = document.getElementById("biasAxes").value;
-
-    if (!fileInput.files.length) {
-      alert("Please upload a file first!");
-      return;
-    }
-
-    if (selectedAxis !== "gender") {
-      alert("Currently, only 'Gender' is supported for bias axes.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", fileInput.files[0]);
-    formData.append("swap_gender", true); // Automatically set swap_gender to true for Gender axis
-
-    try {
-        const response = await fetch("http://127.0.0.1:8000/api/convert/", {
-            method: "POST",
-            body: formData,
-        });
-        const data = await response.json();
-        console.log("Converted Data:", data);
-        alert("Dataset converted successfully! Check console for details.");
-    } 
-
-    catch (error) {
-        console.error("Error:", error);
-        alert("An error occurred while converting the dataset.");
-    }
-  }
-</script>
-
 <body>
     <div class="container">
-
         <div class="header">
             <h2 class="heading">FAIRIFY</h2>
             <p class="subtext">Helping you Debias your Models</p>
         </div>
-    
-        <div class="progress-container">
-            <div class="progress-line"></div>
-            <div class="progress-steps">
-                <div class="step active" data-step="1">
-                    <img src="./assets/metric.png" alt="metric">
-                </div>
-                <div class="step active" data-step="2">
-                    <img src="./assets/dataset.png" alt="dataset">
-                </div>
-                <div class="step" data-step="3">
-                    <img src="./assets/model.png" alt="model">
-                </div>
-            </div>
-        </div>
         
-       <div class="info">
-            <p>
-                The dataset should contain sentences that contain terms or phrases you want 
-                to test for bias. We will create variants of the sentence where identity terms 
-                of the bias axis are swapped with their alternatives across the axis. We will then 
-                test how a generative language model’s responses vary with changes.
-            </p>
-       </div>
-
-       <div class="datasetOptions">
-
+        <div class="datasetOptions">
             <h3 class="pageHead">SELECT A DATASET OPTION</h3>
 
             <div class="options"> 
@@ -107,33 +31,71 @@
                     <div id="fileName"></div>
                     <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
                 </div>
-                
-                <button class="b1">
-                    <div class="insidebutton">
-                        CREATE A CUSTOM DATASET
-                        <img src="./assets/button1.png" alt="b1" style="border-radius: 50%;">
-                    </div>
-                </button>
             </div>
 
             <div class="axes">
                 <h3 class="pageHead">SELECT BIAS AXES</h3>
-                <select class="dropdown" id="biasAxes" onchange="handleAxesSelection()">
+                <select class="dropdown" id="biasAxes">
                     <option class="textdd" value="gender">Gender</option>
                     <option disabled class="textdd" value="caste">Caste</option>
                     <option disabled class="textdd" value="religion">Religion</option>
                     <option disabled class="textdd" value="race">Race</option>
                 </select>
             </div>
-
-            <div class="convertButton">
-                <button class="finalSubmit" onclick="convertDataset()">SUBMIT</button>
-            </div>
-
         </div>
         
+        <div class="convertButton">
+            <button class="finalSubmit" id="submitBtn">SUBMIT</button>
+        </div>
     </div>
-    <div style="height: 50px;"></div>
-</body>
 
+    <script>
+        function handleFileUpload() {
+            const fake_path = document.getElementById('fileInput').value;
+            const name = fake_path.split("\\").pop();
+            document.getElementById("fileName").innerHTML = "Selected File: " + name;
+        }
+
+        async function convertDataset(event) {
+            event.preventDefault(); 
+
+            const fileInput = document.getElementById("fileInput");
+            const selectedAxis = document.getElementById("biasAxes").value;
+
+            if (!fileInput.files.length) {
+                alert("Please upload a file first!");
+                return;
+            }
+
+            if (selectedAxis !== "gender") {
+                alert("Currently, only 'Gender' is supported for bias axes.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("swap_gender", true); 
+
+            try {
+                const response = await fetch("http://127.0.0.1:8000/api/convert/", {
+                    method: "POST",
+                    body: formData,
+                });
+
+        
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Converted Data:", data);
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while converting the dataset.");
+            }
+        }
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.addEventListener("click", convertDataset);
+    </script>
+</body>
 </html>
