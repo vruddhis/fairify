@@ -16,110 +16,96 @@
             <h2 class="heading">FAIRIFY</h2>
             <p class="subtext">Helping you Debias your Models</p>
         </div>
-
+        
         <div class="datasetOptions">
             <h3 class="pageHead">SELECT A DATASET OPTION</h3>
 
             <div class="options"> 
-                <!-- File Upload Form -->
-                <form id="uploadForm">
-                    <div class="button1File">
-                        <button class="b2" onclick="document.getElementById('fileInput').click()">
-                            <div class="insidebutton">
-                                UPLOAD YOUR OWN DATASET
-                                <img src="./assets/button2.png" alt="b2" style="border-radius: 50%;">
-                            </div>
-                        </button>
-                        <div id="fileName"></div>
-                        <input type="file" id="fileInput" name="file" style="display: none;" required>
-                    </div>
+                <div class="button1File">
+                    <button class="b2" onclick="document.getElementById('fileInput').click()">
+                        <div class="insidebutton">
+                            UPLOAD YOUR OWN DATASET
+                            <img src="./assets/button2.png" alt="b2" style="border-radius: 50%;">
+                        </div>
+                    </button>
+                    <div id="fileName"></div>
+                    <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+                </div>
 
-                    <!-- Bias Axis Selector -->
-                    <div class="axes">
-                        <h3 class="pageHead">SELECT BIAS AXES</h3>
-                        <select class="dropdown" id="biasAxes">
-                            <option class="textdd" value="gender">Gender</option>
-                            <option disabled class="textdd" value="caste">Caste</option>
-                            <option disabled class="textdd" value="religion">Religion</option>
-                            <option disabled class="textdd" value="race">Race</option>
-                        </select>
-                    </div>
-
-                    <!-- Swap Gender Checkbox -->
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="swap_gender" id="swapGenderInput"/> Swap Gender
-                        </label>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <div class="convertButton">
-                        <button class="finalSubmit" id="submitBtn" type="submit">SUBMIT</button>
-                        <p id="loadingMessage"></p> <!-- Loading message here -->
-                    </div>
-                </form>
-
-                <!-- This button is not part of the form anymore -->
-                <button class="b2" onclick="openCustomDataset()">
+                <button class="b2">
                     <div class="insidebutton">
                         CREATE A CUSTOM DATASET
                         <img src="./assets/button1.png" alt="b2" style="border-radius: 50%;">
                     </div>
                 </button>
+
+            </div>
+
+            <div class="axes">
+                <h3 class="pageHead">SELECT BIAS AXES</h3>
+                <select class="dropdown" id="biasAxes">
+                    <option class="textdd" value="gender">Gender</option>
+                    <option disabled class="textdd" value="caste">Caste</option>
+                    <option disabled class="textdd" value="religion">Religion</option>
+                    <option disabled class="textdd" value="race">Race</option>
+                </select>
+            </div>
+            
+            <div class="convertButton">
+                <button class="finalSubmit" id="submitBtn">SUBMIT</button>
             </div>
         </div>
+        
+        
     </div>
 
     <script>
-        // Handle file selection
-        document.getElementById('fileInput').addEventListener('change', function(event) {
-            const fileName = event.target.files[0].name;
-            document.getElementById('fileName').textContent = "Selected File: " + fileName;
-        });
+        function handleFileUpload() {
+            const fake_path = document.getElementById('fileInput').value;
+            const name = fake_path.split("\\").pop();
+            document.getElementById("fileName").innerHTML = "Selected File: " + name;
+        }
 
-        // Handle form submission
-        const form = document.getElementById("uploadForm");
-        form.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Prevent default form submission
+        async function convertDataset(event) {
+            event.preventDefault(); 
 
-            const formData = new FormData(form);
-            const swapGender = document.getElementById("swapGenderInput").checked;
-            formData.append("swap_gender", swapGender);
+            const fileInput = document.getElementById("fileInput");
+            const selectedAxis = document.getElementById("biasAxes").value;
 
-            const submitBtn = document.getElementById("submitBtn");
-            const loadingMessage = document.getElementById("loadingMessage");
+            if (!fileInput.files.length) {
+                alert("Please upload a file first!");
+                return;
+            }
 
-            loadingMessage.textContent = "Processing..."; // Show loading message
-            submitBtn.disabled = true; // Disable submit button to prevent multiple submissions
+            if (selectedAxis !== "gender") {
+                alert("Currently, only 'Gender' is supported for bias axes.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("swap_gender", true); 
 
             try {
-                // Make API request to the backend
                 const response = await fetch("http://127.0.0.1:8000/api/convert/", {
                     method: "POST",
                     body: formData,
                 });
 
-                // Handle response
+        
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
 
                 const data = await response.json();
                 console.log("Converted Data:", data);
-                loadingMessage.textContent = "Conversion Successful!";
             } catch (error) {
                 console.error("Error:", error);
-                loadingMessage.textContent = `Error: ${error.message}`;
-            } finally {
-                submitBtn.disabled = false; // Re-enable submit button
+                alert("An error occurred while converting the dataset.");
             }
-        });
-
-        // Function for "Create a Custom Dataset" button (you can modify it for specific behavior)
-        function openCustomDataset() {
-            // Placeholder action for creating a custom dataset
-            console.log("Create a Custom Dataset clicked!");
         }
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.addEventListener("click", convertDataset);
     </script>
 </body>
 </html>
