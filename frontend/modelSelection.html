@@ -33,7 +33,118 @@
             </div>
         </div>
 
+        <div class="pageHeader">
+            <h3>MODEL TESTING</h3>
+            <p class="selectOpt">Select an option from below</p>
+        </div>
+
+        <div class="options">
+
+            <div class="test">
+                <button class="tyom">
+                    <div class="insideButton">
+                        <p>TEST YOUR OWN MODEL</p>
+                        <img src="./assets/download icon.png" alt="download" width="15%" height="15%">
+                    </div>
+                </button>
+                <p>Download the dataset to test on your own model</p>
+            </div>
+
+            <div class="dd">
+                <form id="modelForm">
+                    <div class="text">
+                        <label for="modelSelect" class="labelText">Choose a Huggingface Generative Model: </label>
+                    </div>
+
+                    <div class="optionsdd">
+                        <select id="modelSelect" name="model_name">
+                            <option value="distilgpt2">DistilGPT2</option>
+                            <option value="gpt2">GPT2</option>
+                            <option value="gpt2-medium">GPT2-Medium</option>
+                            <option value="gpt2-large">GPT2-Large</option>
+                          </select>
+                    </div>
+                    
+                    <div class="but">
+                        <button class="loadButton" type="submit">Load Model</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="apiselect">
+                <form class="apiform">
+                    <div class="f1">
+                        <label for="model_name">Model Name:</label>
+                        <input type="text" id="model_name" required>
+                    </div>
+                    
+                    <div class="f2">
+                        <label for="api_key">API Key:</label>
+                        <input type="text" id="api_key"  required>
+                    </div>
+
+                    <div class="f3">
+                        <label for="api_base_url">API Base URL:</label>
+                        <input type="text" id="api_base_url">
+                    </div>
+       
+                    <div class="f4">
+                        <button type="submit" class="loadButton">Load Model</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
     </div>
 </body>
+
+<script>
+    const form = document.getElementById("modelForm");
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/load_model/", {
+                method: "POST",
+                body: formData,
+            });
+            const data = await response.json();
+            console.log("Model Loaded:", data);
+        } 
+
+        catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
+    document.getElementById('externalModelForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const modelName = document.getElementById('model_name').value;
+        const apiKey = document.getElementById('api_key').value;
+        const apiBaseUrl = document.getElementById('api_base_url').value;
+
+        const response = await fetch('/load_external_model/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+
+            body: JSON.stringify({
+                model_name: modelName,
+                api_key: apiKey,
+                api_base_url: apiBaseUrl
+            }),
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+        } 
+        else {
+            alert(result.error);
+        }
+    });
+</script>
 
 </html>
