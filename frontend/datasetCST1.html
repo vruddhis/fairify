@@ -25,24 +25,24 @@
                     <button class="b2" type = "button">
                         <div class="insidebutton">
                             UPLOAD YOUR OWN DATASET
-                            <img src="./assets/button2.png" alt="b2" style="border-radius: 50%;">
+                            <img  class = "bimg" src="./assets/button2.png" alt="b2" style="border-radius: 50%; width: 40px">
                         </div>
                     </button>
                 
-                <input type="file" name="file" id="fileInput" required />
+                <input class="file1" type="file" name="file" id="fileInput" required />
                 
 
                 <button type="button" class="b2">
                     <div class="insidebutton">
                         CREATE A CUSTOM DATASET
-                        <img src="./assets/button1.png" alt="b2" style="border-radius: 50%;">
+                        <img class = "bimg" src="./assets/button1.png" alt="b2" style="border-radius: 50%; width: 40px;">
                     </div>
                 </button>
 
             </div>
 
             <div class="axes">
-                <h3 class="pageHead">SELECT BIAS AXES</h3>
+                <h3 class="pageHead2">SELECT BIAS AXES</h3>
                 <select class="dropdown" id="biasAxes" disabled>
                     <option class="textdd" value="gender">Gender</option>
                     <option class="textdd" value="caste">Caste</option>
@@ -85,6 +85,6 @@
             console.error("Error:", error);
           }
         });
-      </script> */
+      </script>
 </body>
 </html>

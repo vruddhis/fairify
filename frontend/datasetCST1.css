@@ -108,13 +108,22 @@
     letter-spacing: 1.75px;
 }
 
+.pageHead2{
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 1.75px;
+}
+
 .datasetOptions{
-    border-radius: 34px;
+    border-radius: 20px;
     border: 1px solid #DDBDFC;
     background: linear-gradient(180deg, rgba(218, 182, 252, 0.37) 0%, rgba(142, 148, 242, 0.37) 100%);
     box-shadow: 8px 7px 8.2px 0px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(50px);
-    width: 45vw;
+    width: 60vw;
     height: auto;
     padding-bottom: 30px;
     display: flex;
@@ -152,7 +161,8 @@
 
 .options{
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    gap: 10px;
     justify-content: center;
     text-align: center;
     align-items: center;
@@ -189,7 +199,7 @@
 
 .axes{
     display: flex;
-    gap: 60px;
+    gap: 20px;
     padding-top: 30px;
     justify-content: center;
     text-align: center;
@@ -214,12 +224,14 @@
 }
 
 .convertButton{
-    padding-top: 5%;
+    padding-top: 10px;
+    height: auto;
+    width: auto;
 }
 
 .finalSubmit{
-    width: 150px;
-    height: auto;
+    width: 100px;
+    height: 40px;
     font-family: "DM Sans";
     border-radius: 42px;
     border: 1px solid rgba(172, 70, 161, 0.50);
@@ -229,7 +241,6 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    padding: 15px;
 }
 
 .finalSubmit:hover{
@@ -237,11 +248,11 @@
 
 }
 
+.file1:hover{
+    background-color: transparent;
+}
+
 @media screen and (max-width: 1300px) {
-    .datasetOptions{
-        width: 50%;
-        padding: 20px;
-    }
 
     .options, .axes{
         display: flex;
@@ -253,9 +264,17 @@
         padding-top: 30px;
     }
 
-    .pageHead{
-        padding: 0;
-        margin: 0;
+    .axes{
+        padding-top: 0;
+        gap: 0;
+    }
+
+    .pageHead2{
+        font-size: 18px;
+    }
+
+    .options{
+        padding-top: 0;
     }
 }
 
@@ -266,7 +285,8 @@
     }
 
     .pageHead {
-        font-size: 22px;
+        font-size: 20px;
+        padding: 10px;
     }
 
     .info p{
@@ -286,9 +306,30 @@
         width: 40px;
         height: 40px;
     }
+
+    .insidebutton{
+        font-size: 14px;
+    }
+
+    .axes{
+        padding-top: 0;
+        gap: 0;
+    }
+
+    .pageHead2{
+        font-size: 15px;
+    }
+
+    .options{
+        padding-top: 0;
+    }
 }
 
 @media screen and (max-width: 480px) {
+    .button1File{
+        align-items: center;
+    }
+
     .subtext{
         font-size: 20px;
     }
@@ -309,10 +350,40 @@
     }
 
     .pageHead {
-        font-size: 20px;
+        font-size: 18px;
+        padding: 10px;
     }
 
     .info p{
         font-size: 15px;
+    }
+
+    .insidebutton{
+        font-size: 12px;
+    
+    }
+
+    .bimg{
+        width: 25px;
+        height: 30x;
+    }
+
+    .b1, .b2{
+        
+        height: 52px;
+        width: 200px;
+    }
+
+    .axes{
+        padding-top: 0;
+        gap: 0;
+    }
+
+    .pageHead2{
+        font-size: 12px;
+    }
+
+    .options{
+        padding-top: 0;
     }
 }

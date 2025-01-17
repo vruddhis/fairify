@@ -123,6 +123,9 @@
     text-align: center;    
     flex-wrap: wrap;
     gap: 15px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
 }
 
 .test{
@@ -131,6 +134,10 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    border: #000 1px solid;
+    width: 30%;
+    height: 200px;
+    border-radius: 5px;
 }
 
 .tyom{
@@ -211,6 +218,17 @@
     border-radius: 10px;
 }
 
+.apiselect{
+    border: #000 1px solid;
+    width: 30%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+
+}
+
 #modelForm{
     display: flex;
     flex-direction: column;
@@ -221,7 +239,13 @@
 }
 
 .dd{
-    padding: 10px;
+    border: #000 1px solid;
+    width: 30%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
 }
 
 .apiform{
@@ -231,6 +255,9 @@
 }
 
 @media screen and (max-width: 1300px) {
+    .pageHeader{
+        width: 30%;
+    }
 
 }
 
@@ -244,6 +271,10 @@
         font-size: 25px;
     }
 
+    .pageHeader{
+        width: 50%;
+    }
+
     .step {
         width: 60px;
         height: 60px;
@@ -253,6 +284,35 @@
         width: 40px;
         height: 40px;
     }
+
+    .options{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        height: 70%;
+    }
+
+    .test, .dd, .apiselect{
+        width: 50%;
+        
+    }
+
+    .tyom{
+        width: 70%
+    }
+
+    .loadButton{
+        width: 50%;
+    }
+
+    .but{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    
 }
 
 @media screen and (max-width: 480px) {
