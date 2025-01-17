@@ -12,8 +12,12 @@
     event.preventDefault();
     const formData = new FormData(form);
     formData.append("swap_gender", document.getElementById("swapGenderInput").checked);
+    
+    for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+          }
 
-    try {
+   try {
       const response = await fetch("http://127.0.0.1:8000/api/convert/", {
         method: "POST",
         body: formData,
@@ -24,4 +28,6 @@
       console.error("Error:", error);
     }
   });
-</script>
+
+
+</script>  

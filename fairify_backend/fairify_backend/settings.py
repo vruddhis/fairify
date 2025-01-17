@@ -141,3 +141,4 @@ CORS_ALLOW_HEADERS = [
     "content-type",
     "authorization",
 ]
+TIMEOUT = 600  
