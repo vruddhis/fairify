@@ -17,3 +17,4 @@ class ModelRegistry:
         if cls.model is None:
             raise ValueError("No model has been loaded.")
         return cls.model, cls.model_evaluator, cls.aggregator
+

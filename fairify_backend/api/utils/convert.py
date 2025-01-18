@@ -47,4 +47,4 @@ def convert_to_augmented_csv(file_path, swap_gender=False):
             for sample in dataset.samples
         ]
 
-    return augmented_rows
+    return augmented_dataset, augmented_rows

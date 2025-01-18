@@ -1,9 +1,11 @@
 import os
+from uuid import uuid4
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
 from django.conf import settings
 from .utils.convert import convert_to_augmented_csv
+from .utils.storage import save_augmented_dataset_to_file, load_augmented_dataset_from_file
 import torch
 from transformers import GPT2LMHeadModel
 from countergenedit import get_generative_model_evaluator, pt_to_generative_model  #,api_to_generative_model
@@ -12,30 +14,65 @@ from countergen import aggregators
 from countergen.tools.api_utils import ApiConfig
 
 class FileConversionAPIView(APIView):
-    parser_classes = [MultiPartParser]
-
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
         swap_gender = request.data.get('swap_gender', 'false').lower() == 'true'
 
         if not file:
             return Response({"error": "No file was uploaded."}, status=400)
+        print(f"MEDIA_ROOT: {settings.MEDIA_ROOT}")
+        print(f"Uploaded file name: {file.name}")
+
+
+        if not os.path.exists(settings.MEDIA_ROOT):
+            print("Media root directory does not exist. Creating it...")
+            os.makedirs(settings.MEDIA_ROOT)
+        else:
+            print("Media root directory exists.")
+
         temp_path = os.path.join(settings.MEDIA_ROOT, file.name)
-        with open(temp_path, 'wb') as f:
-            for chunk in file.chunks():
-                f.write(chunk)
+        
+        
+        print(f"Temp file path: {temp_path}")
 
         try:
+           
+            with open(temp_path, 'wb') as f:
+                for chunk in file.chunks():
+                    f.write(chunk)
+            print(f"File saved successfully at {temp_path}")
 
-            augmented_data = convert_to_augmented_csv(temp_path, swap_gender=swap_gender)
+      
+            augmented_dataset, augmented_rows = convert_to_augmented_csv(temp_path, swap_gender=swap_gender)
+
+         
+            augmented_file_name = "augmented_dataset.jsonl"
+            augmented_file_path = os.path.join(settings.MEDIA_ROOT, augmented_file_name)
+            save_augmented_dataset_to_file(augmented_dataset, augmented_file_path)
+            print(f"Augmented dataset saved successfully at {augmented_file_path}")
+            augmented_file_url = f"{settings.MEDIA_URL}{augmented_file_name}"
+            request.session['augmented_file_url'] = augmented_file_url
+            request.session['augmented_file_name'] = augmented_file_name
+            session_debug_url = request.session.get('augmented_file_url')
+            session_debug_name = request.session.get('augmented_file_name')
+            print("Debug: Augmented File URL in session:", session_debug_url)
+            print("Debug: Augmented File Name in session:", session_debug_name)
+
             os.remove(temp_path)
+            print(f"Temp file removed: {temp_path}")
 
-            return Response({"augmented_data": augmented_data}, status=200)
+            return Response({
+                "message": "Augmented dataset created successfully.",
+                "augmented_file_url": request.build_absolute_uri(augmented_file_path),
+                "augmented_file_name": augmented_file_name
+            }, status=200)
+
         except Exception as e:
+            print(f"Error occurred: {e}")  
             if os.path.exists(temp_path):
                 os.remove(temp_path)
+                print(f"Temp file removed due to error: {temp_path}")
             return Response({"error": str(e)}, status=500)
-
 
 from .models import ModelRegistry
 

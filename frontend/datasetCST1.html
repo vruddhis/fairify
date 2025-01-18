@@ -81,6 +81,13 @@
             });
             const data = await response.json();
             console.log("Converted Data:", data);
+            if (data.augmented_file_url && data.augmented_file_name) {
+                console.log("Redirecting to modelSelection.html...");
+                alert("Redirecting to modelSelection.html...");
+      window.location.href = "modelSelection.html";
+    } else {
+      console.error("Error: No file URL or name in response.");
+    }
           } catch (error) {
             console.error("Error:", error);
           }

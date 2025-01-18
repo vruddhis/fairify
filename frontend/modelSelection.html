@@ -41,7 +41,7 @@
         <div class="options">
 
             <div class="test">
-                <button class="tyom">
+                <button class="tyom" onclick="downloadFile()">
                     <div class="insideButton">
                         <p>TEST YOUR OWN MODEL</p>
                         <img src="./assets/download icon.png" alt="download" width="15%" height="15%">
@@ -146,6 +146,27 @@
             alert(result.error);
         }
     });
+
+
+
+    function downloadFile() {
+
+    const fileUrl = "{{ request.session.augmented_file_url }}";
+    const fileName = "{{ request.session.augmented_file_name }}";
+
+    console.log("File URL:", fileUrl);
+    console.log("File Name:", fileName);
+
+    if (fileUrl && fileName) {
+        const a = document.createElement('a');
+        a.href = fileUrl; 
+        a.download = fileName; 
+        a.click(); 
+    } else {
+        console.error("File URL or name not found in the session.");
+    }
+}
+
 </script>
 
 </html>
