@@ -93,6 +93,9 @@
                     </div>
                 </form>
             </div>
+            <div class="evaluate">
+                <button id="evaluateButton" class="evaluateButton">Evaluate</button>
+            </div>
 
         </div>
     </div>
@@ -118,14 +121,14 @@
             console.error("Error:", error);
         }
     });
-
-    document.getElementById('externalModelForm').addEventListener('submit', async function(e) {
+/*
+document.getElementById('externalModelForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const modelName = document.getElementById('model_name').value;
         const apiKey = document.getElementById('api_key').value;
         const apiBaseUrl = document.getElementById('api_base_url').value;
 
-        const response = await fetch('/load_external_model/', {
+        const response = await fetch('http://127.0.0.1:8000/api/load_external_model/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -146,7 +149,7 @@
             alert(result.error);
         }
     });
-
+*/
 
 
     function downloadFile() {
@@ -166,6 +169,28 @@
         console.error("File URL or name not found in the session.");
     }
 }
+
+evaluateButton.addEventListener("click", async () => {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/evaluate_model/", {
+            method: "POST",
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Evaluation Results:", data.results);
+
+            
+            window.location.href = "/resultsCST"; 
+        } else {
+            const error = await response.json();
+            alert("Evaluation failed: " + error.error);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An unexpected error occurred during evaluation.");
+    }
+});
 
 </script>
 

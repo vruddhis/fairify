@@ -17,4 +17,14 @@ class ModelRegistry:
         if cls.model is None:
             raise ValueError("No model has been loaded.")
         return cls.model, cls.model_evaluator, cls.aggregator
+    @classmethod
+    def get_model_evaluator(cls):
+        if not cls._model_evaluator:
+            raise ValueError("No model evaluator is set.")
+        return cls._model_evaluator
 
+    @classmethod
+    def get_aggregator(cls):
+        if not cls._aggregator:
+            raise ValueError("No aggregator is set.")
+        return cls._aggregator

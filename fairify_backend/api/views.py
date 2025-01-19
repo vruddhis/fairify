@@ -99,7 +99,27 @@ class LoadModelAPIView(APIView):
             }, status=200)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
+class EvaluateModelAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            model = ModelRegistry.get_model()
+            model_evaluator = ModelRegistry.get_model_evaluator()
+            aggregator = ModelRegistry.get_aggregator()
 
+            if not hasattr(request.session, 'aug_ds') or request.session['aug_ds'] is None:
+                return Response({"error": "Augmented dataset not found."}, status=400)
+
+            aug_ds = request.session['aug_ds']  
+            
+            results = countergen.evaluate(aug_ds.samples, model_evaluator, aggregator)
+            aggregator.display({model.name: results})  
+
+            return Response({
+                "message": "Evaluation completed successfully.",
+                "results": results
+            }, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
 """class LoadExternalModelAPIView(APIView):
     def post(self, request, *args, **kwargs):
         model_name = request.data.get("model_name")
