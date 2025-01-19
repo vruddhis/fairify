@@ -16,15 +16,16 @@ class ModelRegistry:
     def get_model(cls):
         if cls.model is None:
             raise ValueError("No model has been loaded.")
-        return cls.model, cls.model_evaluator, cls.aggregator
+        return cls.model
+
     @classmethod
     def get_model_evaluator(cls):
-        if not cls._model_evaluator:
+        if cls.model_evaluator is None:
             raise ValueError("No model evaluator is set.")
-        return cls._model_evaluator
+        return cls.model_evaluator
 
     @classmethod
     def get_aggregator(cls):
-        if not cls._aggregator:
+        if cls.aggregator is None:
             raise ValueError("No aggregator is set.")
-        return cls._aggregator
+        return cls.aggregator

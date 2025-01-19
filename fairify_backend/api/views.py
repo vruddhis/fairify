@@ -1,4 +1,5 @@
 import os
+import json
 from uuid import uuid4
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -12,6 +13,8 @@ from countergenedit import get_generative_model_evaluator, pt_to_generative_mode
 from countergenedit.tools.utils import get_device
 from countergen import aggregators
 from countergen.tools.api_utils import ApiConfig
+from .dataset import DatasetRegistry
+import countergen
 
 class FileConversionAPIView(APIView):
     def post(self, request, *args, **kwargs):
@@ -51,12 +54,11 @@ class FileConversionAPIView(APIView):
             save_augmented_dataset_to_file(augmented_dataset, augmented_file_path)
             print(f"Augmented dataset saved successfully at {augmented_file_path}")
             augmented_file_url = f"{settings.MEDIA_URL}{augmented_file_name}"
-            request.session['augmented_file_url'] = augmented_file_url
-            request.session['augmented_file_name'] = augmented_file_name
-            session_debug_url = request.session.get('augmented_file_url')
-            session_debug_name = request.session.get('augmented_file_name')
-            print("Debug: Augmented File URL in session:", session_debug_url)
-            print("Debug: Augmented File Name in session:", session_debug_name)
+
+            DatasetRegistry.set_dataset(augmented_dataset)
+            print("Successfuly set dataset")
+
+
 
             os.remove(temp_path)
             print(f"Temp file removed: {temp_path}")
@@ -99,20 +101,19 @@ class LoadModelAPIView(APIView):
             }, status=200)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
+        
 class EvaluateModelAPIView(APIView):
     def post(self, request, *args, **kwargs):
         try:
             model = ModelRegistry.get_model()
             model_evaluator = ModelRegistry.get_model_evaluator()
             aggregator = ModelRegistry.get_aggregator()
-
-            if not hasattr(request.session, 'aug_ds') or request.session['aug_ds'] is None:
-                return Response({"error": "Augmented dataset not found."}, status=400)
-
-            aug_ds = request.session['aug_ds']  
+            model_name = model.name if hasattr(model, 'name') else "UnknownModel"
+            aug_ds = DatasetRegistry.get_dataset()
+            
             
             results = countergen.evaluate(aug_ds.samples, model_evaluator, aggregator)
-            aggregator.display({model.name: results})  
+            aggregator.display({model_name: results})  
 
             return Response({
                 "message": "Evaluation completed successfully.",
@@ -120,6 +121,8 @@ class EvaluateModelAPIView(APIView):
             }, status=200)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
+
+
 """class LoadExternalModelAPIView(APIView):
     def post(self, request, *args, **kwargs):
         model_name = request.data.get("model_name")

@@ -3,7 +3,8 @@ import pandas as pd
 from countergen import Dataset, Sample, SimpleAugmenter
 
 def convert_to_augmented_csv(file_path, swap_gender=False):
-    #takes in a csv or json, uses first two columns as input and output, augmenting against gender
+    # takes in a csv or json, uses first two columns as input and output, augmenting against gender
+    print("this function is starting")
     _, ext = os.path.splitext(file_path)
     if ext == ".csv":
         df = pd.read_csv(file_path)
@@ -28,23 +29,32 @@ def convert_to_augmented_csv(file_path, swap_gender=False):
     augmented_rows = []
 
     if swap_gender:
+        print("Augmentation against gender is enabled.")
         augmenters = [SimpleAugmenter.from_default("gender")]
         augmented_dataset = dataset.augment(augmenters)
 
+        print("Augmented dataset created. Checking augmented data...")
+
+       
         for original, augmented in zip(dataset.samples, augmented_dataset.samples):
+            print(f"Original Input: {original.input}, Augmented Variations: {len(augmented.variations)}")
             for variation in augmented.variations:
-            
+                print(f"  Variation text: {variation.text}, Categories: {variation.categories}")
+
                 augmented_rows.append({
-                        "Input": original.input,
-                        "Variation": variation.text,
-                        "Outputs": original.outputs,
-                        "Gender": variation.categories
-                    })
+                    "Input": original.input,
+                    "Variation": variation.text,
+                    "Outputs": original.outputs,
+                    "Gender": variation.categories
+                })
 
     if not swap_gender:
+        print("Augmentation against gender is not enabled.")
         augmented_rows = [
             {"Input": sample.input, "Augmented Input Against Gender": None, "Outputs": sample.outputs}
             for sample in dataset.samples
         ]
 
+    
+    print(f"Total augmented rows: {len(augmented_rows)}")
     return augmented_dataset, augmented_rows
