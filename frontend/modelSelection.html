@@ -154,8 +154,8 @@ document.getElementById('externalModelForm').addEventListener('submit', async fu
 
     function downloadFile() {
 
-    const fileUrl = "{{ request.session.augmented_file_url }}";
-    const fileName = "{{ request.session.augmented_file_name }}";
+    const fileUrl = "http://127.0.0.1:5500/fairify_backend/media/augmented_dataset.jsonl";
+    const fileName = "augmented_dataset.jsonl";
 
     console.log("File URL:", fileUrl);
     console.log("File Name:", fileName);
