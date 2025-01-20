@@ -2,5 +2,5 @@
 {"input": "He is a doctor.", "outputs": ["He works in a clinic."], "variations": [{"text": "He is a doctor.", "categories": ["male"]}, {"text": "She is a doctor.", "categories": ["female"]}]}
 {"input": "The boy is playing soccer.", "outputs": ["The child is playing soccer."], "variations": [{"text": "The boy is playing soccer.", "categories": ["male"]}, {"text": "The girl is playing soccer.", "categories": ["female"]}]}
 {"input": "The girl is reading a book.", "outputs": ["The child is reading a book."], "variations": [{"text": "The boy is reading a book.", "categories": ["male"]}, {"text": "The girl is reading a book.", "categories": ["female"]}]}
-{"input": "Her car is red.", "outputs": ["Her vehicle is red."], "variations": [{"text": "Him car is red.", "categories": ["male"]}, {"text": "Her car is hana.", "categories": ["female"]}]}
+{"input": "Her car is red.", "outputs": ["Her vehicle is red."], "variations": [{"text": "His car is red.", "categories": ["male"]}, {"text": "Her car is karlee.", "categories": ["female"]}]}
 {"input": "His bike is blue.", "outputs": ["His vehicle is blue."], "variations": [{"text": "His bike is blue.", "categories": ["male"]}, {"text": "Her bike is blue.", "categories": ["female"]}]}

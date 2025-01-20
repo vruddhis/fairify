@@ -1,6 +1,11 @@
 import os
 import json
+import io
 from uuid import uuid4
+from django.core.files.storage import default_storage
+import matplotlib
+matplotlib.use('Agg') 
+import matplotlib.pyplot as plt
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
@@ -93,7 +98,7 @@ class LoadModelAPIView(APIView):
 
             aggregator = aggregators.PerformanceStatsPerCategory()
 
-            ModelRegistry.set_model(model, model_evaluator, aggregator)
+            ModelRegistry.set_model(model, model_evaluator, aggregator, model_name)
 
             return Response({
                 "message": f"Model '{model_name}' loaded and stored successfully.",
@@ -108,21 +113,37 @@ class EvaluateModelAPIView(APIView):
             model = ModelRegistry.get_model()
             model_evaluator = ModelRegistry.get_model_evaluator()
             aggregator = ModelRegistry.get_aggregator()
-            model_name = model.name if hasattr(model, 'name') else "UnknownModel"
+            model_name = model.name if hasattr(model, 'model_name') else "UnknownModel"
             aug_ds = DatasetRegistry.get_dataset()
             
-            
             results = countergen.evaluate(aug_ds.samples, model_evaluator, aggregator)
+            
+            buf = io.BytesIO()
             aggregator.display({model_name: results})  
+            plt.savefig(buf, format='png') 
+            buf.seek(0)  
 
+
+            filename = 'plots/evaluation_plot.png'
+            file_path = default_storage.save(filename, buf)
+            
+            image_url = f'{settings.MEDIA_URL}{filename}'
+            DatasetRegistry.set_image(image_url)
             return Response({
                 "message": "Evaluation completed successfully.",
-                "results": results
+                "plot_url": image_url
             }, status=200)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 
-
+class GetGraphURLAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            image_url = DatasetRegistry.get_image()
+            return Response({"image_url": image_url}, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+        
 """class LoadExternalModelAPIView(APIView):
     def post(self, request, *args, **kwargs):
         model_name = request.data.get("model_name")

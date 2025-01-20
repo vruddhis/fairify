@@ -178,10 +178,12 @@ evaluateButton.addEventListener("click", async () => {
 
         if (response.ok) {
             const data = await response.json();
-            console.log("Evaluation Results:", data.results);
+            console.log("This is done, hopefully will continue")
 
             
-            window.location.href = "/resultsCST"; 
+            window.location.href= "http://127.0.0.1:5500/frontend/resultsCST.html";
+
+ 
         } else {
             const error = await response.json();
             alert("Evaluation failed: " + error.error);

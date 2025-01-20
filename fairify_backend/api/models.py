@@ -5,12 +5,14 @@ class ModelRegistry:
     model = None
     model_evaluator = None
     aggregator = None
+    model_name = None
 
     @classmethod
-    def set_model(cls, model, model_evaluator, aggregator):
+    def set_model(cls, model, model_evaluator, aggregator, model_name):
         cls.model = model
         cls.model_evaluator = model_evaluator
         cls.aggregator = aggregator
+        cls.model_name = model_name
 
     @classmethod
     def get_model(cls):
