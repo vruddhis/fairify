@@ -7,8 +7,7 @@
 </head>
 <body>
     <h1>Evaluation Results</h1>
-    <p>Here is the graph:</p>
-    <img id="graph" src="" alt="Evaluation Graph" style="max-width: 100%; height: auto;">
+    <img id="graph" src="" alt="Evaluation Graph">
 </body>
 <script>
     async function loadGraph() {
@@ -16,7 +15,7 @@
             const response = await fetch("http://127.0.0.1:8000/api/get_graph_url/");
             if (response.ok) {
                 const data = await response.json();
-                document.getElementById("graph").src = data.image_url; 
+                document.getElementById("graph").src = "/fairify_backend" + data.image_url; 
                 console.error("Failed to load graph URL: ", await response.json());
                 alert("Failed to load the evaluation graph.");
             }
