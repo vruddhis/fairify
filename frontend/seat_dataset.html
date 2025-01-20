@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEAT Dataset</title>
+    <link rel="stylesheet" href="./seat_dataset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+</head>
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2 class="heading">FAIRIFY</h2>
+            <p class="subtext">Helping you Debias your Models</p>
+        </div>
+
+        <form id="uploadForm">
+        <div class="datasetOptions">
+            <h3 class="pageHead">SELECT A DATASET OPTION</h3>
+
+            <div class="options"> 
+                <div class="button1File">
+                    <button class="b2" type = "button">
+                        <div class="insidebutton">
+                            UPLOAD YOUR OWN DATASET
+                            <img  class = "bimg" src="./assets/button2.png" alt="b2" style="border-radius: 50%; width: 40px">
+                        </div>
+                    </button>
+                
+                <input class="file1" type="file" name="file" id="fileInput" required />
+                
+                <button type="button" class="b2">
+                    <div class="insidebutton">
+                        CREATE A CUSTOM DATASET
+                        <img class = "bimg" src="./assets/button1.png" alt="b2" style="border-radius: 50%; width: 40px;">
+                    </div>
+                </button>
+
+                <button type="button" class="b2">
+                    <div class="insidebutton">
+                        SELECT A FAIRIFY DATASET
+                        <img class = "bimg" src="./assets/button3.png" alt="b2" style="border-radius: 50%; padding-left: 10px; width: 40px;">
+                    </div>
+                </button>
+
+            </div>
+
+            <div class="axes">
+                <h3 class="pageHead2">SELECT BIAS AXES</h3>
+                <select class="dropdown" id="biasAxes" disabled>
+                    <option class="textdd" value="gender">Gender</option>
+                    <option class="textdd" value="caste">Caste</option>
+                    <option class="textdd" value="religion">Religion</option>
+                    <option class="textdd" value="race">Race</option>
+                </select>
+            </div>
+            <label style="display: none;">
+                <input type="checkbox" name="swap_gender" id="swapGenderInput" checked /> Swap Gender
+            </label>
+            
+            
+            <div class="convertButton">
+                <button class="finalSubmit" id="submitBtn" type="submit">SUBMIT</button>
+            </div>
+    </div>
+</body>
+</html>

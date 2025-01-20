@@ -1,0 +1,337 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.heading{
+    text-align: center;
+    font-family: DM Sans, sans-serif;
+    font-size: 45px;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 6.05px;
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+}
+
+.subtext{
+    position: relative;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    color: #7F7F7F;
+    font-family: "DM Sans";
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.info{
+    width: 70%;
+    height: auto;
+    border-radius: 18px;
+    border: 1px solid #7F7F7F;
+}
+
+.info p{
+    color: rgba(0, 0, 0, 0.80);
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    padding: 10px 30px 10px 30px;
+}
+
+.pageHead{
+    font-family: "DM Sans";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 1.75px;
+}
+
+.pageHead2{
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: 1.75px;
+}
+
+.datasetOptions{
+    border-radius: 20px;
+    border: 1px solid #DDBDFC;
+    background: linear-gradient(180deg, rgba(218, 182, 252, 0.37) 0%, rgba(142, 148, 242, 0.37) 100%);
+    box-shadow: 8px 7px 8.2px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(50px);
+    width: 60vw;
+    height: auto;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.b1, .b2{
+    width: auto;
+    height: auto;
+    font-family: "DM Sans";
+    border-radius: 42px;
+    border: 1px solid rgba(172, 70, 161, 0.50);
+    background: rgba(130, 47, 175, 0.70);
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 7px;
+}
+
+.insidebutton{
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.button1File{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.dropdown{
+    width: 227px;
+    height: 45px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 1px solid rgba(172, 70, 161, 0.50);
+    background: rgba(130, 47, 175, 0.70);
+    color: #000;
+    font-family: "DM Sans";
+    font-size: 16px;
+}
+
+.textdd{
+    color: #ffffff;
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 1px;
+    background: rgba(130, 47, 175, 0.50);
+}
+
+.axes{
+    display: flex;
+    gap: 20px;
+    padding-top: 30px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.insidebutton{
+    border-radius: 42px;
+}
+
+.button1File :hover{
+    background-color: #623e83;
+}
+
+#fileName{
+    font-family: "DM Sans";
+    font-size: 16px;
+}
+
+#fileName:hover{
+    background: none;
+}
+
+.convertButton{
+    padding-top: 10px;
+    height: auto;
+    width: auto;
+}
+
+.finalSubmit{
+    width: 100px;
+    height: 40px;
+    font-family: "DM Sans";
+    border-radius: 42px;
+    border: 1px solid rgba(172, 70, 161, 0.50);
+    background: rgba(130, 47, 175, 0.70);
+    color: #000;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.finalSubmit:hover{
+    background-color: #623e83;
+
+}
+
+.file1:hover{
+    background-color: transparent;
+}
+
+@media screen and (max-width: 1300px) {
+
+    .options, .axes{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .options{
+        padding-top: 30px;
+    }
+
+    .axes{
+        padding-top: 0;
+        gap: 0;
+    }
+
+    .pageHead2{
+        font-size: 18px;
+    }
+
+    .options{
+        padding-top: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .progress-container {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .pageHead {
+        font-size: 20px;
+        padding: 10px;
+    }
+
+    .info p{
+        font-size: 15px;
+    }
+
+    .subtext{
+        font-size: 25px;
+    }
+
+    .step {
+        width: 60px;
+        height: 60px;
+    }
+
+    .step img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .insidebutton{
+        font-size: 14px;
+    }
+
+    .axes{
+        padding-top: 0;
+        gap: 0;
+    }
+
+    .pageHead2{
+        font-size: 15px;
+    }
+
+    .options{
+        padding-top: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .button1File{
+        align-items: center;
+    }
+
+    .subtext{
+        font-size: 20px;
+    }
+
+    .progress-container {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .step {
+        width: 50px;
+        height: 50px;
+    }
+
+    .step img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .pageHead {
+        font-size: 18px;
+        padding: 10px;
+    }
+
+    .info p{
+        font-size: 15px;
+    }
+
+    .insidebutton{
+        font-size: 12px;
+    
+    }
+
+    .bimg{
+        width: 25px;
+        height: 30x;
+    }
+
+    .b1, .b2{
+        
+        height: 52px;
+        width: 200px;
+    }
+
+    .axes{
+        padding-top: 0;
+        gap: 0;
+    }
+
+    .pageHead2{
+        font-size: 12px;
+    }
+
+    .options{
+        padding-top: 0;
+    }
+}
