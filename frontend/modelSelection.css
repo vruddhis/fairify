@@ -191,7 +191,7 @@
     font-size: 16px;
 }
 
-.loadButton{
+.loadButton, .evaluateButton{
     width: 10vw;
     height: auto;
     padding: 8px;
@@ -207,6 +207,14 @@
     font-weight: 500;
     line-height: normal;
     border-radius: 10px;
+}
+
+.loadButton:hover, .evaluateButton:hover{
+    background-color: #cdaaee;
+}
+
+.evaluate{
+    padding-bottom: 5%;
 }
 
 .apiform{
