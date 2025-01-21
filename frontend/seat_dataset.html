@@ -24,7 +24,7 @@
 
             <div class="options"> 
                 <div class="button1File">
-                    <button class="b2" type = "button">
+                    <button class="b2" id="uploadDatasetBtn" type = "button">
                         <div class="insidebutton">
                             UPLOAD YOUR OWN DATASET
                             <img  class = "bimg" src="./assets/button2.png" alt="b2" style="border-radius: 50%; width: 40px">
@@ -69,3 +69,63 @@
     </div>
 </body>
 </html>
+<script>
+
+    document.getElementById("submitBtn").addEventListener("click", () => {
+        window.location.href = "modelSEAT.html";  
+    });
+
+
+    document.getElementById("uploadDatasetBtn").addEventListener("click", () => {
+        document.getElementById("fileInput").click();
+    });
+
+    
+    document.getElementById("fileInput").addEventListener("change", async (event) => {
+        const file = event.target.files[0]; 
+
+        if (!file) {
+            alert("No file selected!");
+            return;
+        }
+
+        if (!file.name.endsWith(".csv")) {
+            alert("Please upload a valid CSV file.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            try {
+                const csvContent = e.target.result; 
+                const rows = csvContent.split("\n").map(row => row.split(","));
+                if (rows[0].length !== 4) {
+                    alert("Invalid CSV format. Ensure there are exactly four columns: X, Y, A, B.");
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append("file", file);
+
+                const response = await fetch("http://127.0.0.1:8000/api/upload_dataset/", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert("Dataset uploaded successfully!");
+                    console.log("Upload Response:", data);
+                } else {
+                    const error = await response.json();
+                    alert("Failed to upload dataset: " + error.error);
+                }
+            } catch (error) {
+                console.error("Error uploading file:", error);
+                alert("An unexpected error occurred during file upload.");
+            }
+        };
+
+        reader.readAsText(file); 
+    });
+</script>

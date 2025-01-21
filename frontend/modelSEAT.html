@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Selection</title>
+    <link rel="stylesheet" href="./modelSelection.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="header">
+            <h2 class="heading">FAIRIFY</h2>
+            <p class="subtext">Helping you Debias your Models</p>
+        </div>
+    
+        <div class="progress-container">
+            <div class="progress-line"></div>
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <img src="./assets/metric.png" alt="metric">
+                </div>
+                <div class="step active" data-step="2">
+                    <img src="./assets/dataset.png" alt="dataset">
+                </div>
+                <div class="step active" data-step="3">
+                    <img src="./assets/model.png" alt="model">
+                </div>
+            </div>
+        </div>
+
+        <div class="pageHeader">
+            <h3>MODEL TESTING</h3>
+            <p class="selectOpt">Select an option from below</p>
+        </div>
+
+        <div class="options">
+
+           
+
+            <div class="dd">
+                <form id="modelForm">
+                    <div class="text">
+                        <label for="modelSelect" class="labelText">Choose a Huggingface Generative Model: </label>
+                    </div>
+
+                    <div class="optionsdd">
+                        <select id="modelSelect" name="model_name">
+                            <option value="distilgpt2">DistilGPT2</option>
+                            <option value="gpt2">GPT2</option>
+                            <option value="gpt2-medium">GPT2-Medium</option>
+                            <option value="gpt2-large">GPT2-Large</option>
+                          </select>
+                    </div>
+                    
+                    <div class="but">
+                        <button class="loadButton" type="submit">Load Model</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="apiselect">
+                <form class="apiform">
+                    <div class="f1">
+                        <label for="model_name">Model Name:</label>
+                        <input type="text" id="model_name" required>
+                    </div>
+                    
+                    <div class="f2">
+                        <label for="api_key">API Key:</label>
+                        <input type="text" id="api_key"  required>
+                    </div>
+
+                    <div class="f3">
+                        <label for="api_base_url">API Base URL:</label>
+                        <input type="text" id="api_base_url">
+                    </div>
+       
+                    <div class="f4">
+                        <button type="submit" class="loadButton">Load Model</button>
+                    </div>
+                </form>
+            </div>
+       </div>
+
+       <div class="evaluate">
+            <button id="evaluateButton" class="evaluateButton">Evaluate</button>
+        </div>
+    </div>
+</body>
+
+<script>
+const evaluateButton = document.getElementById("evaluateButton");
+
+evaluateButton.addEventListener("click", async () => {
+    const form = document.getElementById("modelForm");
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch("http://127.0.0.1:8000/compute_weat/", {
+            method: "POST",
+            body: formData,
+        });
+
+        const data = await response.json();
+        console.log("WEAT Computation Result:", data);
+
+        
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
+
+
+</script>
+
+</html>

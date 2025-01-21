@@ -8,7 +8,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.conf import settings
 from .utils.convert import convert_to_augmented_csv
 from .utils.storage import save_augmented_dataset_to_file, load_augmented_dataset_from_file
@@ -20,7 +20,48 @@ from countergen import aggregators
 from countergen.tools.api_utils import ApiConfig
 from .dataset import DatasetRegistry
 import countergen
+from .utils.csv_to_sets import load_word_sets_from_csv
+from .utils.weat import compute_weat_effect
+from transformers import AutoTokenizer, AutoModel
+from .models import ModelRegistry
 
+class ComputeWEATAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            dataset_path = DatasetRegistry.get_seat_dataset()
+            if not dataset_path:
+                return Response({"error": "No dataset found in DatasetRegistry."}, status=400)
+            
+            try:
+                target_1, target_2, attr_1, attr_2, headings = load_word_sets_from_csv(dataset_path)
+            except Exception as e:
+                return Response({"error": f"Error processing CSV: {str(e)}"}, status=500)
+
+    
+            model_name = ModelRegistry.model_name
+            if not model_name:
+                return Response({"error": "Model name is not set. Please load a model first."}, status=400)
+
+            try:
+                tokenizer = AutoTokenizer.from_pretrained(model_name)
+                model = AutoModel.from_pretrained(model_name, output_hidden_states=True)
+            except Exception as e:
+                return Response({"error": f"Error loading model {model_name}: {str(e)}"}, status=500)
+
+            try:
+                effect_size = compute_weat_effect(target_1, target_2, attr_1, attr_2, tokenizer, model)
+                print(effect_size)
+                return Response({
+                    "message": "WEAT computation completed successfully.",
+                    
+                    "headings": headings
+                }, status=200)
+            except Exception as e:
+                return Response({"error": f"Error during WEAT computation: {str(e)}"}, status=500)
+
+        except Exception as e:
+            return Response({"error": f"Unexpected error: {str(e)}"}, status=500)
+        
 class FileConversionAPIView(APIView):
     def post(self, request, *args, **kwargs):
         file = request.FILES.get('file')
@@ -81,7 +122,7 @@ class FileConversionAPIView(APIView):
                 print(f"Temp file removed due to error: {temp_path}")
             return Response({"error": str(e)}, status=500)
 
-from .models import ModelRegistry
+
 
 class LoadModelAPIView(APIView):
     def post(self, request, *args, **kwargs):
@@ -143,12 +184,34 @@ class GetGraphURLAPIView(APIView):
             return Response({"image_url": image_url}, status=200)
         except Exception as e:
             return Response({"error": str(e)}, status=500)
+
+import pandas as pd
+
+class UploadDatasetAPIView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+
+    def post(self, request, *args, **kwargs):
+        file = request.FILES.get("file")
+        if not file:
+            return Response({"error": "No file uploaded."}, status=400)
+
+        try:
+            df = pd.read_csv(file)
+            if len(df.columns) != 4:
+                return Response({"error": "Invalid CSV format. There must be exactly 4 columns"}, status=400)
+
+            DatasetRegistry.set_seat_dataset(df.to_dict(orient="records"))
+
+            return Response({"message": "Dataset uploaded and registered successfully."}, status=200)
+        except Exception as e:
+            return Response({"error": str(e)}, status=500)
+
         
 """class LoadExternalModelAPIView(APIView):
     def post(self, request, *args, **kwargs):
         model_name = request.data.get("model_name")
-        api_key = request.data.get("api_key")  # API Key for external API
-        api_base_url = request.data.get("api_base_url", "https://api.openai.com/v1")  # Default to OpenAI
+        api_key = request.data.get("api_key")  
+        api_base_url = request.data.get("api_base_url")  
 
         if not model_name or not api_key:
             return Response({"error": "Model name and API key are required."}, status=400)
