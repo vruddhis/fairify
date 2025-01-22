@@ -24,11 +24,13 @@ from .utils.csv_to_sets import load_word_sets_from_csv
 from .utils.weat import compute_weat_effect
 from transformers import AutoTokenizer, AutoModel
 from .models import ModelRegistry
+from django.core.files.base import ContentFile
 
 class ComputeWEATAPIView(APIView):
     def post(self, request, *args, **kwargs):
         try:
             dataset_path = DatasetRegistry.get_seat_dataset()
+            print("dataset path is", dataset_path)
             if not dataset_path:
                 return Response({"error": "No dataset found in DatasetRegistry."}, status=400)
             
@@ -51,6 +53,7 @@ class ComputeWEATAPIView(APIView):
             try:
                 effect_size = compute_weat_effect(target_1, target_2, attr_1, attr_2, tokenizer, model)
                 print(effect_size)
+                DatasetRegistry.set_seat_results(effect_size)
                 return Response({
                     "message": "WEAT computation completed successfully.",
                     
@@ -196,13 +199,20 @@ class UploadDatasetAPIView(APIView):
             return Response({"error": "No file uploaded."}, status=400)
 
         try:
-            df = pd.read_csv(file)
+            file_name = "uploaded_dataset.csv"
+            
+            file_path = os.path.join(default_storage.location, file_name)
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+            with default_storage.open(file_path, 'wb') as f:
+                f.write(file.read())
+
+            df = pd.read_csv(file_path)
             if len(df.columns) != 4:
                 return Response({"error": "Invalid CSV format. There must be exactly 4 columns"}, status=400)
-
-            DatasetRegistry.set_seat_dataset(df.to_dict(orient="records"))
-
+            DatasetRegistry.set_seat_dataset(file_path)
             return Response({"message": "Dataset uploaded and registered successfully."}, status=200)
+
         except Exception as e:
             return Response({"error": str(e)}, status=500)
 

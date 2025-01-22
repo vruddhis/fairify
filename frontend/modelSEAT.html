@@ -94,6 +94,26 @@
 </body>
 
 <script>
+        const form = document.getElementById("modelForm");
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch("http://127.0.0.1:8000/api/load_model/", {
+                method: "POST",
+                body: formData,
+            });
+         
+            const data = await response.json();
+            console.log("Model Loaded:", data);
+        } 
+
+        catch (error) {
+            console.error("Error:", error);
+        }
+    });
+
 const evaluateButton = document.getElementById("evaluateButton");
 
 evaluateButton.addEventListener("click", async () => {
@@ -101,13 +121,13 @@ evaluateButton.addEventListener("click", async () => {
     const formData = new FormData(form);
 
     try {
-        const response = await fetch("http://127.0.0.1:8000/compute_weat/", {
+        const response = await fetch("http://127.0.0.1:8000/api/compute_weat/", {
             method: "POST",
             body: formData,
         });
 
         const data = await response.json();
-        console.log("WEAT Computation Result:", data);
+        
 
         
     } catch (error) {
