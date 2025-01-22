@@ -64,6 +64,25 @@ class ComputeWEATAPIView(APIView):
 
         except Exception as e:
             return Response({"error": f"Unexpected error: {str(e)}"}, status=500)
+    
+class WEATScoreAPIView(APIView):
+    @classmethod
+    def get_seat_results(cls):
+        seat_results = DatasetRegistry.get_seat_results()  
+        if seat_results is None:
+            raise ValueError("No SEAT results are set.")
+        return seat_results
+
+    def get(self, request, *args, **kwargs):
+        try:
+            seat_results = self.get_seat_results()
+            return Response({"seat_results": seat_results}, status=200)
+        
+        except ValueError as ve:
+            return Response({"error": str(ve)}, status=400)
+        except Exception as e:
+            return Response({"error": f"An unexpected error occurred: {str(e)}"}, status=500)
+
         
 class FileConversionAPIView(APIView):
     def post(self, request, *args, **kwargs):

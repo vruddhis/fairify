@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEAT Results</title>
+</head>
+<body>
+
+    <h1>SEAT Results</h1>
+        <div class="score" id="seatScore"></div>
+    </div>
+
+    <script>
+
+        async function getSEATScore() {
+            try {
+                const response = await fetch("http://127.0.0.1:8000/api/get_seat_score/");  
+                const data = await response.json();
+                
+                if (data.seat_results) {
+                    document.getElementById('seatScore').innerText = `SEAT Score: ${data.seat_results}`;
+                } else {
+                    document.querySelector('.loading').style.display = 'none';
+                    document.getElementById('seatScore').innerText = 'No SEAT score available.';
+                }
+            } catch (error) {
+                console.error("Error fetching SEAT score:", error);
+                document.querySelector('.loading').style.display = 'none';
+                document.getElementById('seatScore').innerText = 'Error fetching SEAT score.';
+            }
+        }
+
+        getSEATScore();
+    </script>
+
+</body>
+</html>

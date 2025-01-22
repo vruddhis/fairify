@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import FileConversionAPIView, ComputeWEATAPIView
+from .views import FileConversionAPIView, ComputeWEATAPIView, WEATScoreAPIView
 from .views import LoadModelAPIView, EvaluateModelAPIView, GetGraphURLAPIView, UploadDatasetAPIView
 
 
@@ -13,4 +13,5 @@ urlpatterns = [
     path('get_graph_url/', GetGraphURLAPIView.as_view(), name='get_graph_url'),
     path('upload_dataset/', UploadDatasetAPIView.as_view(), name='upload_dataset'),
     path('compute_weat/', ComputeWEATAPIView.as_view(), name='compute_weat'),
+    path('get_seat_score/', WEATScoreAPIView.as_view(), name='get_seat_score'),
 ]
