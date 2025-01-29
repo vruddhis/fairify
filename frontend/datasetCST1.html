@@ -22,7 +22,7 @@
 
             <div class="options"> 
                 <div class="button1File">
-                    <button class="b2" type = "button">
+                    <button class="b2" id="uploadDatasetBtn" type = "button">
                         <div class="insidebutton">
                             UPLOAD YOUR OWN DATASET
                             <img  class = "bimg" src="./assets/button2.png" alt="b2" style="border-radius: 50%; width: 40px">
@@ -64,34 +64,53 @@
     </div>
 
     <script>
-        const form = document.getElementById("uploadForm");
-        form.addEventListener("submit", async (event) => {
-          event.preventDefault();
-          const formData = new FormData(form);
+        document.getElementById("submitBtn").addEventListener("click", () => {
+         window.location.href = "modelSelection.html";
+    });
+    document.getElementById("uploadDatasetBtn").addEventListener("click", () => {
+        document.getElementById("fileInput").click();
+    });
+
+
+    document.getElementById("fileInput").addEventListener("change", async (event) => {
+        const file = event.target.files[0]; 
+
+        if (!file) {
+            alert("No file selected!");
+            return;
+        }
+
+        if (!file.name.endsWith(".csv")) {
+            alert("Please upload a valid CSV file.");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            try {
+                const formData = new FormData(form);
           formData.append("swap_gender", document.getElementById("swapGenderInput").checked);
           for (let [key, value] of formData.entries()) {
         console.log(key, value);
-    }
-
-
-          try {
-            const response = await fetch("http://127.0.0.1:8000/api/convert/", {
+       
+        const response = await fetch("http://127.0.0.1:8000/api/convert/", {
               method: "POST",
               body: formData,
             });
             const data = await response.json();
-            console.log("Converted Data:", data);
-            if (data.augmented_file_url && data.augmented_file_name) {
-                console.log("Redirecting to modelSelection.html...");
-                alert("Redirecting to modelSelection.html...");
-      window.location.href = "modelSelection.html";
-    } else {
-      console.error("Error: No file URL or name in response.");
-    }
-          } catch (error) {
-            console.error("Error:", error);
-          }
-        });
+            console.log("Converted Data:", data);}
+
+            } catch (error) {
+                console.error("Error uploading file:", error);
+                alert("An unexpected error occurred during file upload.");
+            }
+        };
+
+        
+    });
+
+        
+
       </script>
 </body>
 </html>

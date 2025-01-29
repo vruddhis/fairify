@@ -176,7 +176,7 @@ class EvaluateModelAPIView(APIView):
             model = ModelRegistry.get_model()
             model_evaluator = ModelRegistry.get_model_evaluator()
             aggregator = ModelRegistry.get_aggregator()
-            model_name = model.name if hasattr(model, 'model_name') else "UnknownModel"
+            model_name = model.model_name if hasattr(model, 'model_name') else "UnknownModel"
             aug_ds = DatasetRegistry.get_dataset()
             
             results = countergen.evaluate(aug_ds.samples, model_evaluator, aggregator)
