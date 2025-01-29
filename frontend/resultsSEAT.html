@@ -4,25 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SEAT Results</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+
+    <style>
+        body{
+            padding: 0;
+            margin: 0;
+        }
+
+        .heading{
+            color: #000;
+            font-family: "DM Sans";
+            font-size: 40px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            letter-spacing: 5px;
+            text-align: center;
+            padding-top: 15px;
+            padding-bottom: 10px;
+            margin: 0;
+        }
+
+        .headerSEAT{
+            background: linear-gradient(180deg, rgba(218, 182, 252, 0.60) 0%, rgba(173, 167, 255, 0.36) 100%);
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: auto;
+        }
+
+        .question{
+            color: #000;
+            font-family: "DM Sans";
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+        }
+
+        .answer{
+            color: #000;
+            font-family: "DM Sans";
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 300;
+            line-height: normal;
+        }
+
+        .content{
+            padding-left: 100px; 
+            padding-right: 100px;
+            
+        }
+
+        .text{
+            color: #000;
+            font-family: "DM Sans";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            letter-spacing: 3px;
+            margin: 0;
+            text-align: center;
+            align-content: center;
+        }
+
+        .scoreValue{
+            width: 300px;
+            height: 40px;
+            border-radius: 10px;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            border: 1px solid #000;
+            font-family: "DM Sans";
+            font-size: 18px;
+            color: gray;
+        }
+
+        .frame{
+            display: flex;
+            gap: 30px;
+            text-align: center;
+            justify-content: center;
+            height: auto;
+            width: 750px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            border-radius: 10px;
+            border: 1px solid #DDBDFC;
+            background: linear-gradient(180deg, rgba(218, 182, 252, 0.37) 0%, rgba(142, 148, 242, 0.37) 100%);
+            box-shadow: 8px 7px 8.2px 0px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(50px);
+        }
+
+        .score{
+            align-content: center;
+            justify-items: center;
+        }
+
+        .messageC{
+            padding-top: 30px;
+            color: #000;
+            font-family: "DM Sans";
+            font-size: 17px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            width: 800px;
+        }
+    </style>
+
 </head>
 <body>
 
-    <h1>SEAT Results</h1>
-        <div class="score" id="seatScore"></div>
+    <div class="headerSEAT">
+        <h1 class="heading">SEAT RESULTS</h1>
+        <hr>
     </div>
 
-    <script>
+    <div class="content">
+        <div class="q1">
+            <p class="question">
+                What does SEAT Score tell about your model?
+            </p>
+            <p class="answer">
+                The Sentence Encoder Association Test (SEAT) score measures intersectional biases in your model by assessing how strongly it associates demographic groups (e.g., gender, religion, caste) with specific attributes (e.g., career, violence, pleasantness) - for example, whether it more strongly associates career-related words with male names versus female names. It uses sentences like "This is [target]" and "This is [attribute]". A higher score indicates bias, while a lower score suggests less bias.
+            </p>
+        </div>
 
+        <div class="q2">
+            <p class="question">
+                How is SEAT Score Calculated?
+            </p>
+            <ul class="answer">
+                <li>SEAT is calculated by taking two sets of target concepts (e.g., male and female names) and two sets of attribute words (e.g., career and family-related words). </li>
+                <li>These are then converted into sentence representations using simple templates like "This is [word]". </li>
+                <li>It then measures the strength of association between target concepts and attributes by computing cosine similarities between their vector representations.</li>
+                <li>Then an effect size (d) is computed that shows the strength of the bias.</li>
+                <li>A larger effect size indicates a stronger bias.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="score">
+        <div class="frame">
+            <h1 class="text">YOUR MODEL'S SEAT SCORE</h1>
+            <div class="scoreValue" id="seatScore">1.0</div>
+        </div>
+        <div class="messageC" id="message"></div>
+
+    </div>
+ 
+    <script>
+    /*
         async function getSEATScore() {
             try {
                 const response = await fetch("http://127.0.0.1:8000/api/get_seat_score/");  
                 const data = await response.json();
                 
                 if (data.seat_results) {
-                    document.getElementById('seatScore').innerText = `SEAT Score: ${data.seat_results}`;
+                    document.getElementById('seatScore').innerText = ` ${data.seat_results}`;
                 } else {
                     document.querySelector('.loading').style.display = 'none';
-                    document.getElementById('seatScore').innerText = 'No SEAT score available.';
+                    document.getElementById('seatScore').innerText = 'No SEAT Score available.';
                 }
             } catch (error) {
                 console.error("Error fetching SEAT score:", error);
@@ -30,8 +180,53 @@
                 document.getElementById('seatScore').innerText = 'Error fetching SEAT score.';
             }
         }
-
         getSEATScore();
+    */
+        function messageDisplay(){
+            const div = document.getElementById("seatScore");
+            const value = div.textContent;
+            const messageContainer = document.getElementById("message")
+
+            if (isNaN(value)) {
+                messageContainer.innerHTML = '<p>Unable to determine bias insights. Please check your model’s SEAT score.</p>';
+                return;
+            }
+
+            let message1 = "";
+            let tip = "";
+
+            if (value >= 1.0) {
+                messageContainer.innerHTML = '<p>Your model exhibits a strong bias! It heavily associates Identity Set 1 with Attribute Set 1 and Identity Set 2 with Attribute Set 2.</p> <p>How to improve? Consider fine-tuning with more diverse training data and applying bias mitigation techniques like counterfactual data augmentation.</p>';
+            } 
+
+            else if (value >= 0.6) {
+                messageContainer.innerHTML = '<p>Your model shows a noticeable bias. It tends to associate Identity Set 1 more with Attribute Set 1, but the bias is not extreme.</p> <p>How to improve? Monitor bias in outputs and consider balancing training data to reduce skewed associations.</p>';
+            } 
+
+            else if (value >= 0.1) {
+                messageContainer.innerHTML = '<p>Your model has a mild bias. There is a small preference for Identity Set 1 being linked to Attribute Set 1, but it’s not severe.</p> <p>Next steps? Regularly audit your model’s performance to ensure fairness across different identities.</p>';
+            } 
+
+            else if (value >= -0.1) {
+                messageContainer.innerHTML = '<p>Your model has minimal bias! It does not strongly associate any identity group with a particular attribute, indicating balanced behavior.</p> <p>Continue monitoring to maintain fairness as your model evolves.</p>';
+            } 
+
+            else if (value >= -0.6) {
+                messageContainer.innerHTML = '<p>Your model has a mild bias in the opposite direction. Identity Set 1 is now slightly linked to Attribute Set 2, and vice versa.</p> <p>Next steps? Consider reviewing training data and re-evaluating model behavior in different contexts.</p>';
+            } 
+
+            else if (value >= -1.0) {
+                messageContainer.innerHTML = '<p>Your model shows a noticeable bias. It leans towards associating Identity Set 1 with Attribute Set 2, reversing common stereotypes but still indicating an imbalance.</p> <p>How to improve? Implement de-biasing strategies to ensure your model treats all identities fairly.</p>';
+            } 
+            
+            else {
+                messageContainer.innerHTML = '<p>Your model exhibits a strong bias in the opposite direction! It reinforces non-traditional associations, linking Identity Set 1 with Attribute Set 2 and Identity Set 2 with Attribute Set 1.</p> <p>How to improve? Apply fairness-aware training methods to create a more balanced model.</p>';
+            }
+        }
+
+        messageDisplay()
+
+    //setTimeout(displaySEATMessage, 2000);
     </script>
 
 </body>
