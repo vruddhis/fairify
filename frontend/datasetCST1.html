@@ -64,53 +64,65 @@
     </div>
 
     <script>
-        document.getElementById("submitBtn").addEventListener("click", () => {
-         window.location.href = "modelSelection.html";
-    });
-    document.getElementById("uploadDatasetBtn").addEventListener("click", () => {
-        document.getElementById("fileInput").click();
-    });
-
-
-    document.getElementById("fileInput").addEventListener("change", async (event) => {
-        const file = event.target.files[0]; 
-
-        if (!file) {
-            alert("No file selected!");
-            return;
-        }
-
-        if (!file.name.endsWith(".csv")) {
-            alert("Please upload a valid CSV file.");
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-            try {
-                const formData = new FormData(form);
-          formData.append("swap_gender", document.getElementById("swapGenderInput").checked);
-          for (let [key, value] of formData.entries()) {
-        console.log(key, value);
-       
-        const response = await fetch("http://127.0.0.1:8000/api/convert/", {
-              method: "POST",
-              body: formData,
-            });
-            const data = await response.json();
-            console.log("Converted Data:", data);}
-
-            } catch (error) {
-                console.error("Error uploading file:", error);
-                alert("An unexpected error occurred during file upload.");
+        document.getElementById("submitBtn").addEventListener("click", (event) => {
+            event.preventDefault(); 
+            window.location.href = "modelSelection.html";
+        });
+    
+        document.getElementById("uploadDatasetBtn").addEventListener("click", () => {
+            document.getElementById("fileInput").click();
+        });
+    
+        document.getElementById("fileInput").addEventListener("change", async (event) => {
+            const file = event.target.files[0]; 
+    
+            if (!file) {
+                alert("No file selected!");
+                return;
             }
-        };
+    
+            if (!file.name.endsWith(".csv")) {
+                alert("Please upload a valid CSV file.");
+                return;
+            }
+    
+            console.log("This is hopefully happening");
 
-        
-    });
+            const reader = new FileReader();
 
-        
+            reader.onload = async (e) => {
+                console.log("inside onload event");
+    
+                try {
+                    console.log("inside try");
 
-      </script>
+                    const form = document.getElementById("uploadForm");
+                    const formData = new FormData(form);
+                    formData.append("swap_gender", document.getElementById("swapGenderInput").checked);
+    
+
+                    for (let [key, value] of formData.entries()) {
+                        console.log(key, value);
+                    }
+    
+                    
+                    const response = await fetch("http://127.0.0.1:8000/api/convert/", {
+                        method: "POST",
+                        body: formData,
+                    });
+    
+                    const data = await response.json();
+                    console.log("Converted Data:", data);
+                } catch (error) {
+                    console.error("Error uploading file:", error);
+                    alert("An unexpected error occurred during file upload.");
+                }
+            };
+    
+            
+            reader.readAsText(file);
+        });
+    </script>
+    
 </body>
 </html>
