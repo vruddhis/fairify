@@ -104,12 +104,18 @@
         }
 
         .score{
+            display: flex;
+            padding-top: 30px;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
             align-content: center;
             justify-items: center;
+            align-items: center;
         }
 
         .messageC{
-            padding-top: 30px;
+            padding-left: 20px;
             color: #000;
             font-family: "DM Sans";
             font-size: 17px;
@@ -117,6 +123,9 @@
             font-weight: 400;
             line-height: normal;
             width: 800px;
+            border-radius: 10px;
+            border: 1px solid #000;
+            background: #E2E8F0;
         }
     </style>
 
@@ -155,14 +164,13 @@
     <div class="score">
         <div class="frame">
             <h1 class="text">YOUR MODEL'S SEAT SCORE</h1>
-            <div class="scoreValue" id="seatScore">1.0</div>
+            <div class="scoreValue" id="seatScore"></div>
         </div>
         <div class="messageC" id="message"></div>
 
     </div>
  
     <script>
-    /*
         async function getSEATScore() {
             try {
                 const response = await fetch("http://127.0.0.1:8000/api/get_seat_score/");  
@@ -181,7 +189,7 @@
             }
         }
         getSEATScore();
-    */
+    
         function messageDisplay(){
             const div = document.getElementById("seatScore");
             const value = div.textContent;
@@ -223,10 +231,9 @@
                 messageContainer.innerHTML = '<p>Your model exhibits a strong bias in the opposite direction! It reinforces non-traditional associations, linking Identity Set 1 with Attribute Set 2 and Identity Set 2 with Attribute Set 1.</p> <p>How to improve? Apply fairness-aware training methods to create a more balanced model.</p>';
             }
         }
-
         messageDisplay()
 
-    //setTimeout(displaySEATMessage, 2000);
+    setTimeout(messageDisplay, 2000);
     </script>
 
 </body>
