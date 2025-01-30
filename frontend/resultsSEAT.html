@@ -104,12 +104,18 @@
         }
 
         .score{
+            display: flex;
+            padding-top: 30px;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
             align-content: center;
             justify-items: center;
+            align-items: center;
         }
 
         .messageC{
-            padding-top: 30px;
+            padding-left: 20px;
             color: #000;
             font-family: "DM Sans";
             font-size: 17px;
@@ -117,6 +123,9 @@
             font-weight: 400;
             line-height: normal;
             width: 800px;
+            border-radius: 10px;
+            border: 1px solid #000;
+            background: #E2E8F0;
         }
     </style>
 
@@ -155,7 +164,7 @@
     <div class="score">
         <div class="frame">
             <h1 class="text">YOUR MODEL'S SEAT SCORE</h1>
-            <div class="scoreValue" id="seatScore">1.0</div>
+            <div class="scoreValue" id="seatScore"></div>
         </div>
         <div class="messageC" id="message"></div>
 
