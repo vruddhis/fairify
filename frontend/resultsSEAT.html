@@ -127,6 +127,53 @@
             border: 1px solid #000;
             background: #E2E8F0;
         }
+
+        @media screen and (max-width: 480px) {
+            .heading{
+                font-size: 20px;
+            }
+
+            .question{
+                font-size: 15px;
+            }
+
+            .answer{
+                font-size: 12px;
+            }
+
+            .content{
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .text{
+                font-size: 12px;
+            }
+
+            .scoreValue{
+                width: 140px;
+                height: 30px;
+                border-radius: 5px;
+            }
+
+            .frame{
+                width: auto;
+                gap: 7px;
+                padding-left: 20px;
+                padding-right: 20px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            .messageC{
+                width: auto;
+                height: auto;
+                font-size: 12px;
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 
 </head>
@@ -194,6 +241,7 @@
             const div = document.getElementById("seatScore");
             const value = div.textContent;
             const messageContainer = document.getElementById("message")
+            console.log(value)
 
             if (isNaN(value)) {
                 messageContainer.innerHTML = '<p>Unable to determine bias insights. Please check your model’s SEAT score.</p>';
