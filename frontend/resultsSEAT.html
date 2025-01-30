@@ -134,7 +134,7 @@
                 What does SEAT Score tell about your model?
             </p>
             <p class="answer">
-                The Sentence Encoder Association Test (SEAT) score measures intersectional biases in your model by assessing how strongly it associates demographic groups (e.g., gender, religion, caste) with specific attributes (e.g., career, violence, pleasantness) - for example, whether it more strongly associates career-related words with male names versus female names. It uses sentences like "This is [target]" and "This is [attribute]". A higher score indicates bias, while a lower score suggests less bias.
+                The Sentence Encoder Association Test (SEAT) score measures intersectional biases in your model by assessing how strongly it associates demographic groups (e.g., gender, religion, caste) with specific attributes (e.g., career, violence, pleasantness) - for example, whether it more strongly associates career-related words with male names versus female names. It uses sentences like "This is [target]" and "This is [attribute]". A higher magnitude indicates bias, while a lower magnitude suggests less bias.
             </p>
         </div>
 
@@ -162,7 +162,7 @@
     </div>
  
     <script>
-    /*
+    
         async function getSEATScore() {
             try {
                 const response = await fetch("http://127.0.0.1:8000/api/get_seat_score/");  
@@ -181,11 +181,12 @@
             }
         }
         getSEATScore();
-    */
+    
         function messageDisplay(){
             const div = document.getElementById("seatScore");
             const value = div.textContent;
             const messageContainer = document.getElementById("message")
+            console.log(value)
 
             if (isNaN(value)) {
                 messageContainer.innerHTML = '<p>Unable to determine bias insights. Please check your model’s SEAT score.</p>';
@@ -207,6 +208,7 @@
                 messageContainer.innerHTML = '<p>Your model has a mild bias. There is a small preference for Identity Set 1 being linked to Attribute Set 1, but it’s not severe.</p> <p>Next steps? Regularly audit your model’s performance to ensure fairness across different identities.</p>';
             } 
 
+
             else if (value >= -0.1) {
                 messageContainer.innerHTML = '<p>Your model has minimal bias! It does not strongly associate any identity group with a particular attribute, indicating balanced behavior.</p> <p>Continue monitoring to maintain fairness as your model evolves.</p>';
             } 
@@ -224,9 +226,9 @@
             }
         }
 
-        messageDisplay()
+        
 
-    //setTimeout(displaySEATMessage, 2000);
+    setTimeout(messageDisplay, 2000);
     </script>
 
 </body>
