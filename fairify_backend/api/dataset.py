@@ -44,6 +44,10 @@ class DatasetRegistry:
     def get_seat4(cls):
         
         return cls.seat4
+    @classmethod
+    def set_dataset(cls, words):
+        cls.augmented_dataset = words
+        print("Set augmented dataset")
     
         
 

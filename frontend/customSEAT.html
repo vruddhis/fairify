@@ -5,19 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seat Dataset</title>
     <script>
-        function submitWordData() {
-            const word1 = document.getElementById("word1").value;
-            const column1 = document.getElementById("column1").value;
+        function submitWordData(wordId, columnId) {
+            const word = document.getElementById(wordId).value;
+            const column = document.getElementById(columnId).value;
 
-            if (word1 && column1) {
-                fetch('/api/get_related_words/', {
+            if (word && column) {
+                console.log("i am sending this");
+                fetch('http://127.0.0.1:8000/api/get_related_words/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({word: word1, number: column1})
+                    body: JSON.stringify({ word: word, number: column })
                 })
-                .then(response => response.json())
+                .then(response => response.text())
                 .then(data => {
                     alert(data.message);
                 })
@@ -29,27 +30,20 @@
 
         function uploadFileData(columnNumber) {
             const fileInput = document.getElementById(`file${columnNumber}`);
-            const column = columnNumber;
             const file = fileInput.files[0];
 
             if (file) {
                 const formData = new FormData();
                 formData.append('file', file);
-                formData.append('number', column);
+                formData.append('number', columnNumber);
 
-                fetch('/api/seat_col_file/', {
+                fetch('http://127.0.0.1:8000/api/seat_col_file/', {
                     method: 'POST',
                     body: formData,
                 })
-                .then(response => {
-            if (response.ok) {
-                return response.text();  
-            } else {
-                throw new Error('Network response was not ok');
-            }
-        })
+                .then(response => response.text())  // Expecting plain text here
                 .then(data => {
-                    alert(data.message);
+                    alert(data);
                 })
                 .catch(error => console.error('Error:', error));
             } else {
@@ -57,9 +51,8 @@
             }
         }
 
-
         function makeDataset() {
-            fetch('/api/make_dataset/', {
+            fetch('http://127.0.0.1:8000/api/make_dataset/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -77,7 +70,6 @@
 
 <h1>Seat Dataset</h1>
 
-<!-- Four columns for word and file input -->
 <div style="display: flex; gap: 20px; margin-bottom: 20px;">
     <div>
         <h3>Column 1</h3>
@@ -85,7 +77,7 @@
         <select id="column1">
             <option value="1">Column 1</option>
         </select>
-        <button onclick="submitWordData()">Submit Word</button>
+        <button onclick="submitWordData('word1', 'column1')">Submit Word</button>
         <br><br>
         <input type="file" id="file1">
         <button onclick="uploadFileData(1)">Upload File</button>
@@ -97,7 +89,7 @@
         <select id="column2">
             <option value="2">Column 2</option>
         </select>
-        <button onclick="submitWordData()">Submit Word</button>
+        <button onclick="submitWordData('word2', 'column2')">Submit Word</button>
         <br><br>
         <input type="file" id="file2">
         <button onclick="uploadFileData(2)">Upload File</button>
@@ -109,7 +101,7 @@
         <select id="column3">
             <option value="3">Column 3</option>
         </select>
-        <button onclick="submitWordData()">Submit Word</button>
+        <button onclick="submitWordData('word3', 'column3')">Submit Word</button>
         <br><br>
         <input type="file" id="file3">
         <button onclick="uploadFileData(3)">Upload File</button>
@@ -121,14 +113,14 @@
         <select id="column4">
             <option value="4">Column 4</option>
         </select>
-        <button onclick="submitWordData()">Submit Word</button>
+        <button onclick="submitWordData('word4', 'column4')">Submit Word</button>
         <br><br>
         <input type="file" id="file4">
         <button onclick="uploadFileData(4)">Upload File</button>
     </div>
 </div>
 
-<!-- Make Dataset Button -->
+
 <button onclick="makeDataset()">Make Dataset</button>
 
 </body>
