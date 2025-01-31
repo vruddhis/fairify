@@ -5,11 +5,46 @@ class DatasetRegistry:
     CST_url = None
     seat_dataset = None
     seat_results = None
+    seat1 = None
+    seat2 = None
+    seat3 = None
+    seat4 = None
 
     @classmethod
-    def set_dataset(cls, dataset):
-       
-        cls.augmented_dataset = dataset
+    def set_seat1(cls, words):
+        cls.seat1 = words
+        print("Set seat")
+    @classmethod
+    def set_seat2(cls, words):
+        print("Set seat")
+        cls.seat2 = words
+    @classmethod
+    def set_seat3(cls, words):
+        print("Set seat")
+        cls.seat3 = words
+    @classmethod
+    def set_seat4(cls, words):
+        print("Set seat")
+        cls.seat4 = words
+    @classmethod
+    
+    @classmethod
+    def get_seat1(cls):
+        
+        return cls.seat1
+    @classmethod
+    def get_seat2(cls):
+        
+        return cls.seat2
+    @classmethod
+    def get_seat3(cls):
+        
+        return cls.seat3
+    @classmethod
+    def get_seat4(cls):
+        
+        return cls.seat4
+    
         
 
     @classmethod

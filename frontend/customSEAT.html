@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Dataset</title>
+    <script>
+        function submitWordData() {
+            const word1 = document.getElementById("word1").value;
+            const column1 = document.getElementById("column1").value;
+
+            if (word1 && column1) {
+                fetch('/api/get_related_words/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({word: word1, number: column1})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Please fill out both word and column number.');
+            }
+        }
+
+        function uploadFileData(columnNumber) {
+            const fileInput = document.getElementById(`file${columnNumber}`);
+            const column = columnNumber;
+            const file = fileInput.files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+                formData.append('number', column);
+
+                fetch('/api/seat_col_file/', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+            if (response.ok) {
+                return response.text();  
+            } else {
+                throw new Error('Network response was not ok');
+            }
+        })
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                alert('Please select a file to upload.');
+            }
+        }
+
+
+        function makeDataset() {
+            fetch('/api/make_dataset/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+
+<h1>Seat Dataset</h1>
+
+<!-- Four columns for word and file input -->
+<div style="display: flex; gap: 20px; margin-bottom: 20px;">
+    <div>
+        <h3>Column 1</h3>
+        <input type="text" id="word1" placeholder="Enter word for Column 1">
+        <select id="column1">
+            <option value="1">Column 1</option>
+        </select>
+        <button onclick="submitWordData()">Submit Word</button>
+        <br><br>
+        <input type="file" id="file1">
+        <button onclick="uploadFileData(1)">Upload File</button>
+    </div>
+
+    <div>
+        <h3>Column 2</h3>
+        <input type="text" id="word2" placeholder="Enter word for Column 2">
+        <select id="column2">
+            <option value="2">Column 2</option>
+        </select>
+        <button onclick="submitWordData()">Submit Word</button>
+        <br><br>
+        <input type="file" id="file2">
+        <button onclick="uploadFileData(2)">Upload File</button>
+    </div>
+
+    <div>
+        <h3>Column 3</h3>
+        <input type="text" id="word3" placeholder="Enter word for Column 3">
+        <select id="column3">
+            <option value="3">Column 3</option>
+        </select>
+        <button onclick="submitWordData()">Submit Word</button>
+        <br><br>
+        <input type="file" id="file3">
+        <button onclick="uploadFileData(3)">Upload File</button>
+    </div>
+
+    <div>
+        <h3>Column 4</h3>
+        <input type="text" id="word4" placeholder="Enter word for Column 4">
+        <select id="column4">
+            <option value="4">Column 4</option>
+        </select>
+        <button onclick="submitWordData()">Submit Word</button>
+        <br><br>
+        <input type="file" id="file4">
+        <button onclick="uploadFileData(4)">Upload File</button>
+    </div>
+</div>
+
+<!-- Make Dataset Button -->
+<button onclick="makeDataset()">Make Dataset</button>
+
+</body>
+</html>
