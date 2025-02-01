@@ -1,5 +1,6 @@
 import os
 import json
+import csv
 import io
 from uuid import uuid4
 from django.core.files.storage import default_storage
@@ -25,6 +26,98 @@ from .utils.weat import compute_weat_effect
 from transformers import AutoTokenizer, AutoModel
 from .models import ModelRegistry
 from django.core.files.base import ContentFile
+from seat_custom.custom_seat import get_related_words
+
+class UploadCsvAndSetSeatsAPIView(APIView):
+    parser_classes = (MultiPartParser, FormParser) 
+
+    def post(self, request, *args, **kwargs):
+        try:
+            csv_file = request.FILES.get('file')
+            seat_number = int(request.data.get('number'))
+
+            if not csv_file:
+                return Response({"error": "CSV file is required."}, status=400)
+            
+            if seat_number not in [1, 2, 3, 4]:
+                return Response({"error": "Seat number must be between 1 and 4."}, status=400)
+            csv_data = csv_file.read().decode('utf-8')
+            csv_reader = csv.reader(io.StringIO(csv_data))
+            data_list = [row[0] for row in csv_reader]
+            if seat_number == 1:
+                DatasetRegistry.set_seat1(data_list)
+            elif seat_number == 2:
+                DatasetRegistry.set_seat2(data_list)
+            elif seat_number == 3:
+                DatasetRegistry.set_seat3(data_list)
+            elif seat_number == 4:
+                DatasetRegistry.set_seat4(data_list)
+
+            return Response({
+                "message": f"Seat data for Seat{seat_number} uploaded successfully.",
+                "number_of_entries": len(data_list)
+            }, status=200)
+
+        except Exception as e:
+            return Response({"error": f"Unexpected error: {str(e)}"}, status=500)
+
+class MakeDatasetAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            seat1_data = DatasetRegistry.get_seat1()  
+            seat2_data = DatasetRegistry.get_seat2()  
+            seat3_data = DatasetRegistry.get_seat3()  
+            seat4_data = DatasetRegistry.get_seat4()  
+
+            max_length = max(len(seat1_data), len(seat2_data), len(seat3_data), len(seat4_data))
+
+        
+            def pad_list(lst, length):
+                return lst + [""] * (length - len(lst))
+
+            seat1_data = pad_list(seat1_data, max_length)
+            seat2_data = pad_list(seat2_data, max_length)
+            seat3_data = pad_list(seat3_data, max_length)
+            seat4_data = pad_list(seat4_data, max_length)
+
+            csv_filename = "seat_dataset.csv"
+            csv_filepath = os.path.join("/tmp", csv_filename)  
+
+            with open(csv_filepath, mode="w", newline="", encoding="utf-8") as file:
+                writer = csv.writer(file)
+                writer.writerow(["Seat1", "Seat2", "Seat3", "Seat4"]) 
+                for row in zip(seat1_data, seat2_data, seat3_data, seat4_data):
+                    writer.writerow(row)
+
+            DatasetRegistry.set_seat_dataset(csv_filepath)
+
+            return Response({"message": "Dataset created and stored successfully.", "csv_filename": csv_filename}, status=200)
+
+        except Exception as e:
+            return Response({"error": f"Unexpected error: {str(e)}"}, status=500)
+
+SEAT_FUNCTIONS = {
+    1: DatasetRegistry.set_seat1,
+    2: DatasetRegistry.set_seat2,
+    3: DatasetRegistry.set_seat3,
+    4: DatasetRegistry.set_seat4
+}
+
+class GetRelatedWordsAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            category = request.data.get("word")
+            top_n = request.data.get("number")
+
+            if not category or not isinstance(top_n, int) or top_n not in SEAT_FUNCTIONS:
+                return Response({"error": "Invalid input. Provide a valid word and a number (1-4)."}, status=400)
+            related_words = get_related_words(category, top_n)
+            SEAT_FUNCTIONS[top_n](related_words)
+
+            return Response(f"done", status=200)
+
+        except Exception as e:
+            return Response({"error": f"Unexpected error: {str(e)}"}, status=500)
 
 class ComputeWEATAPIView(APIView):
     def post(self, request, *args, **kwargs):
@@ -176,9 +269,10 @@ class EvaluateModelAPIView(APIView):
             model = ModelRegistry.get_model()
             model_evaluator = ModelRegistry.get_model_evaluator()
             aggregator = ModelRegistry.get_aggregator()
-            model_name = model.model_name if hasattr(model, 'model_name') else "UnknownModel"
+            model_name = model.model_name if hasattr(model, 'model_name') else "GPT 2"
             aug_ds = DatasetRegistry.get_dataset()
-            
+            s = aug_ds.samples
+            print("this is happening")
             results = countergen.evaluate(aug_ds.samples, model_evaluator, aggregator)
             
             buf = io.BytesIO()

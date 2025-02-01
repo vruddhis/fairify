@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import FileConversionAPIView, ComputeWEATAPIView, WEATScoreAPIView
-from .views import LoadModelAPIView, EvaluateModelAPIView, GetGraphURLAPIView, UploadDatasetAPIView
+from .views import FileConversionAPIView, ComputeWEATAPIView, WEATScoreAPIView, GetRelatedWordsAPIView, MakeDatasetAPIView
+from .views import LoadModelAPIView, EvaluateModelAPIView, GetGraphURLAPIView, UploadDatasetAPIView, UploadCsvAndSetSeatsAPIView
 
 
 from . import views
@@ -14,4 +14,7 @@ urlpatterns = [
     path('upload_dataset/', UploadDatasetAPIView.as_view(), name='upload_dataset'),
     path('compute_weat/', ComputeWEATAPIView.as_view(), name='compute_weat'),
     path('get_seat_score/', WEATScoreAPIView.as_view(), name='get_seat_score'),
+    path('get_related_words/', GetRelatedWordsAPIView.as_view(), name = 'get_related_words' ),
+    path('make_dataset/', MakeDatasetAPIView.as_view(), name = 'make_dataset'),
+    path('seat_col_file/', UploadCsvAndSetSeatsAPIView.as_view(), name = 'seat_col_file'),
 ]
