@@ -4,67 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seat Dataset</title>
-    <script>
-        function submitWordData(wordId, columnId) {
-            const word = document.getElementById(wordId).value;
-            const column = document.getElementById(columnId).value;
-
-            if (word && column) {
-                console.log("i am sending this");
-                fetch('http://127.0.0.1:8000/api/get_related_words/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ word: word, number: column })
-                })
-                .then(response => response.text())
-                .then(data => {
-                    alert(data.message);
-                })
-                .catch(error => console.error('Error:', error));
-            } else {
-                alert('Please fill out both word and column number.');
-            }
-        }
-
-        function uploadFileData(columnNumber) {
-            const fileInput = document.getElementById(`file${columnNumber}`);
-            const file = fileInput.files[0];
-
-            if (file) {
-                const formData = new FormData();
-                formData.append('file', file);
-                formData.append('number', columnNumber);
-
-                fetch('http://127.0.0.1:8000/api/seat_col_file/', {
-                    method: 'POST',
-                    body: formData,
-                })
-                .then(response => response.text())  // Expecting plain text here
-                .then(data => {
-                    alert(data);
-                })
-                .catch(error => console.error('Error:', error));
-            } else {
-                alert('Please select a file to upload.');
-            }
-        }
-
-        function makeDataset() {
-            fetch('http://127.0.0.1:8000/api/make_dataset/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(error => console.error('Error:', error));
-        }
-    </script>
+    
 </head>
 <body>
 
@@ -72,56 +12,114 @@
 
 <div style="display: flex; gap: 20px; margin-bottom: 20px;">
     <div>
-        <h3>Column 1</h3>
-        <input type="text" id="word1" placeholder="Enter word for Column 1">
-        <select id="column1">
-            <option value="1">Column 1</option>
-        </select>
-        <button onclick="submitWordData('word1', 'column1')">Submit Word</button>
+        <h3>Target Set 1</h3>
+        <input type="text" id="word1" placeholder="Enter word for Target Set 1">
+        <button onclick="submitWordData('word1', 1)">Submit Word</button>
         <br><br>
         <input type="file" id="file1">
         <button onclick="uploadFileData(1)">Upload File</button>
     </div>
 
     <div>
-        <h3>Column 2</h3>
-        <input type="text" id="word2" placeholder="Enter word for Column 2">
-        <select id="column2">
-            <option value="2">Column 2</option>
-        </select>
-        <button onclick="submitWordData('word2', 'column2')">Submit Word</button>
+        <h3>Target Set 2</h3>
+        <input type="text" id="word2" placeholder="Enter word for Target Set 2">
+        <button onclick="submitWordData('word2', 2)">Submit Word</button>
         <br><br>
         <input type="file" id="file2">
         <button onclick="uploadFileData(2)">Upload File</button>
     </div>
 
     <div>
-        <h3>Column 3</h3>
-        <input type="text" id="word3" placeholder="Enter word for Column 3">
-        <select id="column3">
-            <option value="3">Column 3</option>
-        </select>
-        <button onclick="submitWordData('word3', 'column3')">Submit Word</button>
+        <h3>Attribute Set 1</h3>
+        <input type="text" id="word3" placeholder="Enter word for Attribute Set 1">
+        <button onclick="submitWordData('word3', 3)">Submit Word</button>
         <br><br>
         <input type="file" id="file3">
         <button onclick="uploadFileData(3)">Upload File</button>
     </div>
 
     <div>
-        <h3>Column 4</h3>
-        <input type="text" id="word4" placeholder="Enter word for Column 4">
-        <select id="column4">
-            <option value="4">Column 4</option>
-        </select>
-        <button onclick="submitWordData('word4', 'column4')">Submit Word</button>
+        <h3>Attribute Set 2</h3>
+        <input type="text" id="word4" placeholder="Enter word for Attribute Set 2">
+        <button onclick="submitWordData('word4', 4)">Submit Word</button>
         <br><br>
         <input type="file" id="file4">
         <button onclick="uploadFileData(4)">Upload File</button>
     </div>
 </div>
 
-
 <button onclick="makeDataset()">Make Dataset</button>
+<div class="convertButton">
+    <button class="finalSubmit" id="submitBtn" type="submit">SUBMIT</button>
+</div>
 
 </body>
+<script>
+    function submitWordData(wordId, columnId) {
+        const word = document.getElementById(wordId).value;
+        const column = columnId; 
+        
+        if (word && column) {
+            console.log(word, column);
+            fetch('http://127.0.0.1:8000/api/get_related_words/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ word: word, number: column })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Successfully submitted word");
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please fill out both word and column number.');
+        }
+    }
+
+    function uploadFileData(columnNumber) {
+        const fileInput = document.getElementById(`file${columnNumber}`);
+        const file = fileInput.files[0];
+
+        if (file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('number', columnNumber);
+
+            fetch('http://127.0.0.1:8000/api/seat_col_file/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.text())  
+            .then(data => {
+                alert(data);
+            })
+            .catch(error => console.error('Error:', error));
+        } else {
+            alert('Please select a file to upload.');
+        }
+    }
+
+    function makeDataset() {
+        fetch('http://127.0.0.1:8000/api/make_dataset/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    document.getElementById("submitBtn").addEventListener("click", () => {
+        window.location.href = "modelSEAT.html";  
+    });
+</script>
 </html>
+enter the word and we will generate the set or upload the set as a csv file with a single column
+Target Sets: words representing the target concepts you want to test (like "flowers" and "insects")
+Attribute Sets:> words representing the attributes you want to associate with the target concepts (like "pleasant" and "unpleasant")

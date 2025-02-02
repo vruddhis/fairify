@@ -107,15 +107,18 @@ SEAT_FUNCTIONS = {
 class GetRelatedWordsAPIView(APIView):
     def post(self, request, *args, **kwargs):
         try:
+            print(request.data)
             category = request.data.get("word")
             top_n = request.data.get("number")
 
-            if not category or not isinstance(top_n, int) or top_n not in SEAT_FUNCTIONS:
+            
+            if not category or top_n is None:
                 return Response({"error": "Invalid input. Provide a valid word and a number (1-4)."}, status=400)
+            top_n = int(top_n)
             related_words = get_related_words(category, top_n)
             SEAT_FUNCTIONS[top_n](related_words)
 
-            return Response(f"done", status=200)
+            return Response(related_words, status=200)
 
         except Exception as e:
             return Response({"error": f"Unexpected error: {str(e)}"}, status=500)
