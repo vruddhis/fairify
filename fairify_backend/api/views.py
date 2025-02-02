@@ -2,6 +2,7 @@ import os
 import json
 import csv
 import io
+import errno
 from uuid import uuid4
 from django.core.files.storage import default_storage
 import matplotlib
@@ -225,17 +226,18 @@ class FileConversionAPIView(APIView):
             print(f"Temp file removed: {temp_path}")
 
             return Response({
-                "message": "Augmented dataset created successfully.",
-                "augmented_file_url": request.build_absolute_uri(augmented_file_path),
-                "augmented_file_name": augmented_file_name
+                "message": "Augmented dataset created successfully."
             }, status=200)
 
         except Exception as e:
-            print(f"Error occurred: {e}")  
-            if os.path.exists(temp_path):
-                os.remove(temp_path)
-                print(f"Temp file removed due to error: {temp_path}")
-            return Response({"error": str(e)}, status=500)
+            if isinstance(e, OSError) and e.errno == errno.EPIPE:
+                print("Broken pipe error ignored")
+            else:
+                print(f"Error occurred: {e}")  
+                if os.path.exists(temp_path):
+                    os.remove(temp_path)
+                    print(f"Temp file removed due to error: {temp_path}")
+                return Response({"error": str(e)}, status=500)
 
 
 
@@ -273,7 +275,7 @@ class EvaluateModelAPIView(APIView):
             aug_ds = DatasetRegistry.get_dataset()
             s = aug_ds.samples
             print("this is happening")
-            results = countergen.evaluate(aug_ds.samples, model_evaluator, aggregator)
+            results = countergen.evaluate_and_print(aug_ds.samples, model_evaluator, aggregator) #aggregate of the performance of each variation in each sample
             
             buf = io.BytesIO()
             aggregator.display({model_name: results})  

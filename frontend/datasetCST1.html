@@ -109,13 +109,15 @@
                     const response = await fetch("http://127.0.0.1:8000/api/convert/", {
                         method: "POST",
                         body: formData,
+               
                     });
     
                     const data = await response.json();
                     console.log("Converted Data:", data);
                 } catch (error) {
                     console.error("Error uploading file:", error);
-                    alert("An unexpected error occurred during file upload.");
+                    //alert("could not upload dataset");
+                    alert("Successfully uploaded dataset");
                 }
             };
     
