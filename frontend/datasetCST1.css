@@ -10,6 +10,7 @@
     width: auto;
     background-color: gray;
     color: #fff;
+    font-weight: 300;
     text-align: center;
     border-radius: 6px;
     padding: 10px;
@@ -17,6 +18,19 @@
     z-index: 2;
     margin-left: -85px;
 }
+
+.b2:hover .hovert1{
+    visibility: visible;
+}
+
+.b2:hover .hovert2{
+    visibility: visible;
+}
+
+.b2:hover .hovert3{
+    visibility: visible;
+}
+
 
 .progress-line {
     position: absolute;

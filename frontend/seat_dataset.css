@@ -15,6 +15,7 @@
     padding: 10px;
     position: absolute;
     z-index: 2;
+    font-weight: 300;
     margin-left: -85px;
 }
 .progress-container {
@@ -133,6 +134,18 @@
     font-weight: 800;
     line-height: normal;
     letter-spacing: 1.75px;
+}
+
+.b2:hover .hovert1{
+    visibility: visible;
+}
+
+.b2:hover .hovert2{
+    visibility: visible;
+}
+
+.b2:hover .hovert3{
+    visibility: visible;
 }
 
 .pageHead2{

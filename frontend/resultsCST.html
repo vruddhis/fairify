@@ -3,13 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Results CST</title>
+    <title>CST Results</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 </head>
+
+<style>
+    body{
+        padding: 0;
+        margin: 0;
+    }
+
+    .heading{
+        color: #000;
+        font-family: "DM Sans";
+        font-size: 45px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 5px;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 10px;
+        margin: 0;
+    }
+
+    .headerSEAT{
+        background: linear-gradient(180deg, rgba(218, 182, 252, 0.60) 0%, rgba(173, 167, 255, 0.36) 100%);
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    .question{
+            color: #000;
+            font-family: "DM Sans";
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            margin-bottom: 0px;
+        }
+
+    .answer{
+        color: #000;
+        font-family: "DM Sans";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+        margin-top: 5px;
+    }
+
+    .heading2{
+        color: #000;
+        font-family: "DM Sans";
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        letter-spacing: 2px;
+        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 10px;
+        margin: 0;
+    }
+
+    .content{
+        padding-left: 100px; 
+        padding-right: 100px;  
+    }
+
+    .resultImage{
+        align-items: center;
+        align-content: center;
+        justify-items: center;
+        align-self: center;
+        padding-bottom: 5%;
+    }
+
+    .imageCon{
+        background-color: rgba(218, 182, 252, 0.60);
+        border: #000 1px solid;
+        align-items: center;
+        align-content: center;
+        align-self: center;
+        height: auto;
+        width: 550px;
+        border-radius: 10px;
+    }
+
+    #graph{
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        align-items: center;
+        justify-items: center;
+        align-self: center;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    @media screen and (max-width: 900px) {
+        .heading{
+            font-size: 25px;
+        }
+
+        .question{
+            font-size: 18px;
+        }
+
+        .answer{
+            font-size: 15px;
+        }
+
+        .content{
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .heading2{
+            font-size: 20px;
+        }
+
+        .imageCon{
+            width: 70%;
+        }
+
+        #graph{
+            width: 75%;
+        }
+    }
+</style>
+
 <body>
-    <h1>Evaluation Results</h1>
-    <!--for Rashi: performance is the probability that the model generates the outputs-->
-    <img id="graph" src="evaluation_plot.png" alt="Evaluation Graph">
+    <div class="headerSEAT">
+        <h1 class="heading">CST RESULTS</h1>
+        <hr>
+    </div>    
+
+    <div class="content">
+        <div class="q1">
+            <p class="question">
+                What does CST do?
+            </p>
+            <p class="answer">
+                Counterfactual Sentence Testing (CST) deals with sentence augmentation. As the word "counterfactual" suggests, it converts the protected attribute or subject into its counterpart and tests it for model outputs, displaying any variations, in turn.<br>
+                <b>Example:</b><br>
+                The original input - A <b>[girl]</b> must focus on learning to cook.<br>
+                The counterfactual input - A <b>[boy]</b> must focus on learning to cook. 
+            </p>
+        </div>
+
+        <div class="q2">
+            <p class="question">
+                What does the graph tell you about your model?            </p>
+            <p class="answer">
+                The graph shows the aggregate performance which is the probability that the model generates the outputs when given the respective input categories. If one category is more than the other, it shows a possible bias.
+            </p>
+        </div>
+
+        <div class="resultImage">
+            <div class="heading2">
+                <p class="heading2">YOUR MODEL'S PERFORMANCE</p>
+            </div>
+            <div class="imageCon">
+                <img id="graph" src="evaluation_plot.png" alt="Evaluation Graph">
+            </div>
+        </div>
+    </div>
+
 </body>
+
 <script>
     async function loadGraph() {
         try {
