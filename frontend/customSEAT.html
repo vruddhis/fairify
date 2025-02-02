@@ -107,15 +107,31 @@
             }
         })
         .then(response => response.json())
-        .then(data => {
-            alert(data.message);
-        })
+        .then(downloadFile())
         .catch(error => console.error('Error:', error));
     }
 
     document.getElementById("submitBtn").addEventListener("click", () => {
         window.location.href = "modelSEAT.html";  
     });
+
+    function downloadFile() {
+
+const fileUrl = "http://127.0.0.1:5500/fairify_backend/media/seat_dataset.csv";
+const fileName = "seat_dataset.csv";
+
+console.log("File URL:", fileUrl);
+console.log("File Name:", fileName);
+
+if (fileUrl && fileName) {
+    const a = document.createElement('a');
+    a.href = fileUrl; 
+    a.download = fileName; 
+    a.click(); 
+} else {
+    console.error("File URL or name not found in the session.");
+}
+}
 </script>
 </html>
 enter the word and we will generate the set or upload the set as a csv file with a single column

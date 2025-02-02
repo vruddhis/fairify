@@ -82,7 +82,7 @@ class MakeDatasetAPIView(APIView):
             seat4_data = pad_list(seat4_data, max_length)
 
             csv_filename = "seat_dataset.csv"
-            csv_filepath = os.path.join("/tmp", csv_filename)  
+            csv_filepath = os.path.join(default_storage.location, csv_filename)  
 
             with open(csv_filepath, mode="w", newline="", encoding="utf-8") as file:
                 writer = csv.writer(file)

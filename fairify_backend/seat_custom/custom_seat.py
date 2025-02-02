@@ -23,4 +23,4 @@ def get_attribute_words(category, top_n):
         print(f"Error generating related words: {e}")
         return []
 
-print(get_attribute_words("pleasant", 10))
+print(get_attribute_words("career", 10))
