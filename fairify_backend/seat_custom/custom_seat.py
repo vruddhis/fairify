@@ -1,36 +1,26 @@
-from sentence_transformers import SentenceTransformer, util
-from nltk.corpus import wordnet
-import numpy as np
+from transformers import pipeline
+from nltk.corpus import wordnet as wn
 
-sbert_model = SentenceTransformer("all-MiniLM-L6-v2")
+unmasker = pipeline('fill-mask', model='bert-base-uncased')
 
-CATEGORY_SEEDS = {
-    "male": ["man", "boy", "father", "husband", "gentleman", "brother"],
-    "female": ["woman", "girl", "mother", "wife", "lady", "sister"],
-    "career": ["job", "career", "work", "business", "office", "success"],
-    "family": ["home", "family", "parenting", "children", "love", "marriage"],
-    "young": ["teenager", "youth", "student", "young adult", "millennial", "Gen Z"],
-     "old" : ["elderly", "senior", "retiree", "pensioner", "grandparent", "old man/woman"],
-     "dumb": ["naive", "ignorant", "unintelligent", "clueless", "foolish", "gullible", "reckless"],
-"smart": ["wise", "intelligent", "brilliant", "knowledgeable", "logical", "thoughtful", "insightful"]
+def get_synonyms(word):
+    synonyms = set()
+    for synset in wn.synsets(word):
+        for lemma in synset.lemmas():
+            synonyms.add(lemma.name())
+    return list(synonyms)
 
-}
+def get_attribute_words(category, top_n):
+    try:
+        results = unmasker(f"{category} is related to [MASK].")
+        huggingface_words = [result['token_str'] for result in results]
 
-CATEGORY_EMBEDDINGS = {cat: sbert_model.encode(words) for cat, words in CATEGORY_SEEDS.items()}
+        synonyms = get_synonyms(category)
 
-def get_related_words(category, top_n=5):
+        related_words = list(set(huggingface_words + synonyms))[:top_n]
+        return related_words
+    except Exception as e:
+        print(f"Error generating related words: {e}")
+        return []
 
-    if category not in CATEGORY_SEEDS:
-        return []  
-
-    category_embedding = sbert_model.encode([category])
-    similarities = util.pytorch_cos_sim(category_embedding, CATEGORY_EMBEDDINGS[category])[0].numpy()
-
-    top_indices = similarities.argsort()[-top_n:][::-1]
-    top_words = [CATEGORY_SEEDS[category][i] for i in top_indices]
-
-    return top_words
-
-
-print(get_related_words("young"))
-print(get_related_words("old"))
+print(get_attribute_words("pleasant", 10))

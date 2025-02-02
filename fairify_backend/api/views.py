@@ -27,7 +27,7 @@ from .utils.weat import compute_weat_effect
 from transformers import AutoTokenizer, AutoModel
 from .models import ModelRegistry
 from django.core.files.base import ContentFile
-from seat_custom.custom_seat import get_related_words
+from seat_custom.custom_seat import get_attribute_words
 
 class UploadCsvAndSetSeatsAPIView(APIView):
     parser_classes = (MultiPartParser, FormParser) 
@@ -115,7 +115,7 @@ class GetRelatedWordsAPIView(APIView):
             if not category or top_n is None:
                 return Response({"error": "Invalid input. Provide a valid word and a number (1-4)."}, status=400)
             top_n = int(top_n)
-            related_words = get_related_words(category, top_n)
+            related_words = get_attribute_words(category, top_n)
             SEAT_FUNCTIONS[top_n](related_words)
 
             return Response(related_words, status=200)
