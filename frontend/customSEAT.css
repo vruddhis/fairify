@@ -1,0 +1,200 @@
+body{
+    padding: 0;
+    margin: 0;
+}
+
+.heading{
+    color: #000;
+    font-family: "DM Sans";
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 5px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    margin: 0;
+}
+
+.headerSEAT{
+    background: linear-gradient(180deg, rgba(218, 182, 252, 0.60) 0%, rgba(173, 167, 255, 0.36) 100%);
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: auto;
+}
+
+.subhead{
+    text-align: center;
+    color: #7F7F7F;
+    font-family: "DM Sans";
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.ins{
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+}
+
+.insb{
+    border-radius: 10px;
+    border: 1px solid #454545;
+    background: rgba(71, 18, 107, 0.55);
+    width: 400px;
+    padding: 0px 10px 0px 10px;
+}
+
+.instext{
+    color: #FBFEFB;
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.subhead1{
+    text-align: center;
+    color: #000000;
+    font-family: "DM Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.cardContainer{
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+.cards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: #E2E8F0;
+    color: #000;
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.84px;
+    padding-bottom: 15px;
+    height: 180px;
+}
+
+.tcard{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.acard{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.target1{
+    color: #7F7F7F;
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.genButton{
+    border-radius: 10px;
+    border: 1px solid #454545;
+    background: rgba(71, 18, 107, 0.55);
+    color: #FBFEFB;
+    text-align: center;
+    padding: 10px 5px 10px 5px;
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;   
+}
+
+.gen, .convertButton{
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+}
+
+.finalSubmit{
+    border-radius: 10px;
+    border: 1px solid #454545;
+    background: rgba(71, 18, 107, 0.55);
+    color: #FBFEFB;
+    text-align: center;
+    padding: 10px 5px 10px 5px;
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;   
+}
+
+.buttonsT{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+@media screen and (max-width: 900px) {
+    .heading{
+        font-size: 25px;
+    }
+
+    .subhead{
+        font-size: 20px;
+    }
+
+    .ins{
+        gap: 20px;
+        padding: 0px 20px 0px 20px;
+    }
+
+    .subhead1{
+        font-size: 16px;
+    }
+
+    .target1{
+        font-size: 12px;
+    }
+
+    .cards{
+        height: 130px;
+        gap: 8px;
+        font-size: 14px;
+    }
+
+    .cardContainer{
+        margin: 20px;
+    }
+
+    .h{
+        margin-left: 0px;
+    }
+
+    .genButton, .finalSubmit{
+        font-size: 15px;
+    }
+}
