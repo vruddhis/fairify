@@ -79,6 +79,35 @@
     margin-top: 20px;
 }
 
+.mainButtons:hover{
+    background-color: rgb(151, 58, 168, 0.5);
+}
+
+.hovert1, .hovert2, .hovert3{
+    visibility: hidden;
+    width: auto;
+    background-color: gray;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 2;
+    margin-left: -85px;
+}
+
+.mainButtons:hover .hovert1{
+    visibility: visible;
+}
+
+.mainButtons:hover .hovert2{
+    visibility: visible;
+}
+
+.mainButtons:hover .hovert3{
+    visibility: visible;
+}
+
 .subtext{
     position: relative;
     text-align: center;
