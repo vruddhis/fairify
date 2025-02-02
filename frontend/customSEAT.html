@@ -13,8 +13,7 @@
 <div style="display: flex; gap: 20px; margin-bottom: 20px;">
     <div>
         <h3>Target Set 1</h3>
-        <input type="text" id="word1" placeholder="Enter word for Target Set 1">
-        <button onclick="submitWordData('word1', 1)">Submit Word</button>
+        <!-- rashi here dropdown for predefined sets, we can't generate identity terms -->
         <br><br>
         <input type="file" id="file1">
         <button onclick="uploadFileData(1)">Upload File</button>
@@ -22,8 +21,7 @@
 
     <div>
         <h3>Target Set 2</h3>
-        <input type="text" id="word2" placeholder="Enter word for Target Set 2">
-        <button onclick="submitWordData('word2', 2)">Submit Word</button>
+        <!-- rashi here dropdown for predefined sets, we can't generate identity terms -->
         <br><br>
         <input type="file" id="file2">
         <button onclick="uploadFileData(2)">Upload File</button>
@@ -121,5 +119,5 @@
 </script>
 </html>
 enter the word and we will generate the set or upload the set as a csv file with a single column
-Target Sets: words representing the target concepts you want to test (like "flowers" and "insects")
+Target Sets: words representing the target concepts you want to test, these are identity terms (like "flowers" and "insects")
 Attribute Sets:> words representing the attributes you want to associate with the target concepts (like "pleasant" and "unpleasant")
