@@ -5,6 +5,18 @@
     align-items: center;
     margin-bottom: 20px;
 }
+.hovert1, .hovert2, .hovert3{
+    visibility: hidden;
+    width: auto;
+    background-color: gray;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 2;
+    margin-left: -85px;
+}
 
 .progress-line {
     position: absolute;
