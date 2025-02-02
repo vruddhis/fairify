@@ -50,10 +50,12 @@
                 <input class="file1" type="file" name="file" id="fileInput" required />
                 
                 <button type="button" class="b2">
-                    <div class="insidebutton">
-                        CREATE A CUSTOM DATASET
-                        <img class = "bimg" src="./assets/button1.png" alt="b2" style="border-radius: 50%; width: 40px;">
-                    </div>
+                    <a href="./customSEAT.html" style="text-decoration: none; color: black;">
+                        <div class="insidebutton">
+                            CREATE A CUSTOM DATASET
+                            <img class = "bimg" src="./assets/button1.png" alt="b2" style="border-radius: 50%; width: 40px;">
+                        </div>
+                    </a>
                 </button>
 
                 <!--<button type="button" class="b2">
@@ -87,7 +89,6 @@
 </body>
 </html>
 <script>
-
     document.getElementById("submitBtn").addEventListener("click", () => {
         window.location.href = "modelSEAT.html";  
     });
