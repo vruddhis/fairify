@@ -198,3 +198,14 @@ body{
         font-size: 15px;
     }
 }
+
+@media screen and (max-width: 650px) {
+    .cardContainer{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .instext{
+        font-size: 12px;
+    }
+}
