@@ -96,7 +96,7 @@ class HuggingFaceLLM(LLM):
         self.pipe.tokenizer.pad_token_id = self.pipe.model.config.eos_token_id
         return
     
-    def _generate(self, prompts):
+    def _generate(self, prompts, temperature, stop = '\n'):
         # wrap so can get progress bar
         prompts = List_Dataset(prompts)
         responses = tqdm(self.pipe(prompts))

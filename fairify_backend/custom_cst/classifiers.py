@@ -56,7 +56,7 @@ class Sentiment_Classifier(Classifier):
         
         return arrs
     
-"""from detoxify import Detoxify
+from detoxify import Detoxify
 
 # https://huggingface.co/unitary/toxic-bert
     
@@ -87,6 +87,6 @@ class Toxicity_Classifier(Classifier):
         pred_1 = pred_multi.max(axis=0)
         pred_0 = 1 - pred_1
         pred = np.stack([pred_0, pred_1], axis=0)
-        return pred"""
+        return pred
 
     
