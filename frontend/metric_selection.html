@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./metric_selection.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
 </head>
 
@@ -37,18 +39,22 @@
         <div class="selection">
             <h2 class="pageHead">SELECT THE METRIC</h2>
             <div class="allButtons">
-                <button class="mainButtons" onclick="window.location.href='datasetCST1.html'">
-                    <h3>Counterfactual sentence testing</h3>
-                    <p class="buttonSubtext">for generative language models</p>
-                    <div class="hovert1">Changing of the protected attribute to give two (or more) different inputs. </div>
-                </button>
-
-                <button class="mainButtons" onclick="window.location.href='seat_dataset.html'">
-                    <h3>SEAT</h3>
-                    <p class="buttonSubtext">for sentence encoders</p>
-                    <div class="hovert2">Measuring how much a protected attribute is associated with attribute words. </div>
-
-                </button>
+                <div class="buttonContainer">
+                    <button class="mainButtons" onclick="window.location.href='datasetCST1.html'">
+                        <h3>Counterfactual sentence testing</h3>
+                        <p class="buttonSubtext">for generative language models</p>
+                    </button>
+                    <i class="fas fa-info-circle"></i>
+                </div>
+    
+                <div class="buttonContainer">
+                    <button class="mainButtons" onclick="window.location.href='seat_dataset.html'">
+                        <h3>SEAT</h3>
+                        <p class="buttonSubtext">for sentence encoders</p>
+                    </button>
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                
             </div>
         </div>
 

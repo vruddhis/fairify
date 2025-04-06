@@ -62,7 +62,6 @@
     transition: background-color 0.3s;
 }
 
-
 .extra:hover {
     background-color: #9FA0FF;
 }
@@ -81,31 +80,6 @@
 
 .mainButtons:hover{
     background-color: rgb(151, 58, 168, 0.5);
-}
-
-.hovert1, .hovert2, .hovert3{
-    visibility: hidden;
-    width: auto;
-    background-color: gray;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 10px;
-    position: absolute;
-    z-index: 2;
-    margin-left: -85px;
-}
-
-.mainButtons:hover .hovert1{
-    visibility: visible;
-}
-
-.mainButtons:hover .hovert2{
-    visibility: visible;
-}
-
-.mainButtons:hover .hovert3{
-    visibility: visible;
 }
 
 .subtext{
@@ -163,8 +137,7 @@
     font-family: "DM Sans";
     border-radius: 20px;
     background-color: transparent;
-    border: 2px solid #7F7F7F;
-    
+    border: 2px solid #7F7F7F;  
 }
 
 h3{
@@ -187,11 +160,30 @@ h3{
     line-height: normal;
 }
 
+.ibutton{
+    text-align: start;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+i{
+    font-size: 14px;
+    color: black;
+    position: relative;
+    top: -25px; /* move it up */
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1300px) {
     .selection {
         width: 50vw;
         height: auto;
         padding: 20px;
+    }
+
+    .buttonContainer{
+        width: 100%;
     }
 
     .mainButtons {
@@ -215,7 +207,7 @@ h3{
 
     .mainButtons {
         padding: 10px;
-        width: 80%;
+        width: 100%;
         height: auto;
     }
 
@@ -225,6 +217,10 @@ h3{
 
     h3 {
         font-size: 18px;
+    }
+
+    .buttonContainer{
+        width: 100%;
     }
 
     .buttonSubtext {
@@ -261,6 +257,10 @@ h3{
         width: 90%;
         height: auto;
         padding: 10px;
+    }
+
+    .buttonContainer{
+        width: 100%;
     }
 
     .mainButtons {
