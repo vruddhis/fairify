@@ -1,0 +1,56 @@
+for CST:
+
+What is CST (Counterfactual Sentence Testing)?
+CST helps detect social bias in language models by analyzing how their outputs change when identity terms (of protected attributes) in a sentence are swapped with alternatives.
+
+How it works:
+1. You provide an input sentence with a protected attribute.
+    Eg: A [girl] must focus on learning to cook.
+
+2. The tool generates a counterfactual version by replacing the identity term.
+    Eg: A [boy] must focus on learning to cook.
+
+3. You provide one or more possible model outputs for each sentence.
+    Example outputs:
+    She should learn household skills. 
+    He should focus on coding.
+    They need to prepare for life skills.
+
+4. The tool compares model scores/probabilities for these outputs under both inputs.
+
+What does CST show?
+It highlights if the model favors different outputs depending on identity terms.
+
+For example:
+[] should learn household skills. → 80% with [she], 10% with [he]
+
+Such differences may suggest bias in the model.
+
+
+SEAT
+
+What is SEAT (Sentence Encoder Association Test)?
+SEAT evaluates implicit biases in sentence embeddings — the vector representations produced by language models.
+
+How it works:
+1. You provide (or generate) two sets of target words
+Eg:
+Target A: man, male, boy
+Target B: woman, female, girl
+
+2. You provide (or generate) two sets of attribute words
+Eg:
+Attribute X: career, office, professional
+Attribute Y: home, family, parent
+
+3. The model embeds all words and computes similarity scores between the targets and attributes.
+
+What does SEAT show?
+If Target A (e.g., man) is more similar to Attribute X (e.g., career) than Target B (woman) is, it suggests associative bias.
+
+Eg:
+Similarity(man, career) = 0.87
+Similarity(woman, career) = 0.54
+Bias Score: +0.33 toward men
+
+A high score implies gender-career association, revealing potential biases in how the model encodes concepts.
