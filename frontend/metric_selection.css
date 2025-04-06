@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    z-index: -1000;
 }
 
 .progress-line {
@@ -160,6 +161,11 @@ h3{
     line-height: normal;
 }
 
+.information{
+    font-family: "DM Sans";
+    font-size: 15px;
+}
+
 .ibutton{
     text-align: start;
     height: 100%;
@@ -171,8 +177,48 @@ i{
     font-size: 14px;
     color: black;
     position: relative;
-    top: -25px; /* move it up */
+    top: -25px; 
     cursor: pointer;
+}
+
+#modal1, #modal2{
+    display: none;
+}
+
+.modals{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal{
+    width: auto;
+    height: auto;
+    position: relative;
+    padding: 20px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgb(220, 192, 246) 0%, rgb(182, 185, 213) 100%);
+    z-index: 1000;
+}
+
+.close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 35px;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    background-color: #ca454500;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close:hover{
+    background-color: #ff0000;    
 }
 
 @media screen and (max-width: 1300px) {
@@ -189,6 +235,11 @@ i{
     .mainButtons {
         padding: 10px;
         width: 60%;
+        height: auto;
+    }
+
+    .modals{
+        width: 90vw;
         height: auto;
     }
 }
@@ -220,11 +271,33 @@ i{
     }
 
     .buttonContainer{
+        display: flex;
         width: 100%;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    i{
+        top:-18px;
+        padding-left: 3px;
+    }
+
+    .subtext{
+        font-size: 25px;
     }
 
     .buttonSubtext {
         font-size: 15px;
+    }
+
+    .modals{
+        width: 90vw;
+        height: auto;
+    }
+
+    .information{
+        font-size: 14px;
     }
 }
 
@@ -260,7 +333,16 @@ i{
     }
 
     .buttonContainer{
+        display: flex;
         width: 100%;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+    }
+
+    i{
+        top:-18px;
+        padding-left: 3px;
     }
 
     .mainButtons {
@@ -280,5 +362,15 @@ i{
 
     .pageHead {
         font-size: 20px;
+    }
+
+    .modals{
+        width: 90vw;
+        height: auto;
+        top: 50px;
+    }
+
+    .information{
+        font-size: 12px;
     }
 }

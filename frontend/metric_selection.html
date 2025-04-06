@@ -8,14 +8,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+
+    <script>
+        function openmodal1() {
+            var modal = document.getElementById("modal1");
+            modal.style.display = "block";
+        }
+
+        function openmodal2() {
+            var modal = document.getElementById("modal2");
+            modal.style.display = "block";
+        }
+        
+        function closeModal(modalId) {
+            var modal = document.getElementById(modalId);
+            modal.style.display = "none";
+        }
+
+    </script>
 </head>
 
 <body>
     <div class="container">
-
-        
         <div class="header">
             <h2 class="heading">FAIRIFY</h2>
             <p class="subtext">Helping you Debias your Models</p>
@@ -44,7 +59,7 @@
                         <h3>Counterfactual sentence testing</h3>
                         <p class="buttonSubtext">for generative language models</p>
                     </button>
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-info-circle" onclick="openmodal1()"></i>
                 </div>
     
                 <div class="buttonContainer">
@@ -52,9 +67,82 @@
                         <h3>SEAT</h3>
                         <p class="buttonSubtext">for sentence encoders</p>
                     </button>
-                    <i class="fas fa-info-circle"></i>
+                    <i class="fas fa-info-circle"  onclick="openmodal2()"></i>
                 </div>
-                
+            </div>
+        </div>
+
+        <div class="modals">
+            <div class="modal" id="modal1">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modal1')">&times;</span>
+
+                    <h3>What is CST (Counterfactual Sentence Testing)?</h3>
+                    <p class="information">
+                        CST helps detect social bias in language models by analyzing how their outputs change when identity terms (of protected attributes) <br>in a sentence are swapped with alternatives.                       
+                    </p>
+
+                    <h3>How it works:</h3>
+                    <p class="information">
+                    1. You provide an input sentence with a protected attribute.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Eg: A [girl] must focus on learning to cook.
+                    <br>
+                    2. The tool generates a counterfactual version by replacing the identity term.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Eg: A [boy] must focus on learning to cook.
+                    <br>
+                    3. You provide one or more possible model outputs for each sentence.
+                    <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Example outputs:<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;She should learn household skills. <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;He should focus on coding.<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;They need to prepare for life skills.
+                    <br>
+                    4. The tool compares model scores/probabilities for these outputs under both inputs.
+                    </p>
+
+                    <h3>What does CST show?</h3>
+                    <p class="information">
+                        It highlights if the model favors different outputs depending on identity terms.<br>
+                        For example:<br>
+                        [] should learn household skills. → 80% with [she], 10% with [he]<br>
+                        Such differences may suggest bias in the model.
+                    </p>                        
+                </div>
+            </div>
+
+            <div class="modal" id="modal2">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('modal2')">&times;</span>
+                    <h3>What is SEAT (Sentence Encoder Association Test)?</h3>
+                    <p class="information">
+                        SEAT evaluates implicit biases in sentence embeddings — the vector representations produced by language models.
+                    </p>
+                        
+                    <h3>How it works:</h3>
+                    <p class="information">
+                        1.  You provide (or generate) two sets of target words.<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Eg:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Target A: man, male, boy<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Target B: woman, female, girl
+                        <br>
+                        2. You provide (or generate) two sets of attribute words.<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Eg:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Attribute X: career, office, professional<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Attribute Y: home, family, parent<br>
+
+                        3. The model embeds all words and computes similarity scores between the targets and attributes.
+                    </p>
+
+                    <h3>What does SEAT show?</h3>
+                    <p class="information">
+                        If Target A (e.g., man) is more similar to Attribute X (e.g., career) than Target B (woman) is, it suggests associative bias.<br>
+                        Eg:<br>
+                        Similarity(man, career) = 0.87<br>
+                        Similarity(woman, career) = 0.54<br>
+                        Bias Score: +0.33 toward men<br>
+                        A high score implies gender-career association, revealing potential biases in how the model encodes concepts.
+                    </p>
+                </div>
             </div>
         </div>
 
